@@ -1,0 +1,35 @@
+name: CI for Frontend
+
+# Se ejecuta en cada `push` o `pull request` a la rama `main`
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Primer paso: Descargar el código fuente
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # Usar Node.js versión 16
+
+    - name: Install dependencies
+      run: npm install  # Instalar las dependencias del proyecto
+
+    - name: Build project
+      run: npm run build  # Compilar el proyecto para producción
+
+    - name: Verify build
+      run: ls -la dist  # Verificar que la carpeta `dist` se haya generado correctamente
+
+    - name: Run frontend tests (opcional)
+      run: echo "No tests configured for frontend"
