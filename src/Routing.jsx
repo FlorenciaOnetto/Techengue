@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import App from './App'
 import PaginaInicio from "./PaginaInicio"
 
 export default function Routing() {
@@ -7,7 +8,8 @@ export default function Routing() {
         <>
         <BrowserRouter>
             <Routes>
-                <Route path={'/'} element={<PaginaInicio/>}/>
+                <Route path={'/inicio'} element={<PaginaInicio/>}/>
+                <Route path={'/'} element={<App/>}/>
             </Routes>
         </BrowserRouter>
         </>
