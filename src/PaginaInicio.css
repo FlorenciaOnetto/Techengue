@@ -1,0 +1,78 @@
+.pagina-inicio {
+    min-height: 100vh; /* Esto asegura que la página ocupe al menos la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 2rem;
+    background-color: #f4f4f4;
+    flex: 1;
+  }
+  
+  .header-content h2 {
+    font-size: 3rem;
+  }
+  
+  .header-content p {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+  
+  .btn {
+    padding: 0.7rem 1.5rem;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .servicios {
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  
+  .servicios-contenedor {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+  
+  .servicio {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #333;
+    color: white;
+  }
+  
