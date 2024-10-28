@@ -13,6 +13,7 @@ export default function PaginaInicio() {
             <a href="#profiles">Pet Profiles</a>
             <a href="#guardians">Guardians</a>
             <a href="#featured">Featured</a>
+            <a href="/perfilusuario">Perfil de Usuario</a> {/* Nuevo enlace */}
           </nav>
           <div style={styles.authButtons}>
             <button style={styles.joinBtn}>Join</button>
