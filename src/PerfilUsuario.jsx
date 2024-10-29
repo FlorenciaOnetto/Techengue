@@ -10,26 +10,25 @@ export default function PerfilUsuario() {
                 <h2>Alex Johnson</h2>
                 <a href="mailto:alex.johnson@example.com" className="profile-email">alex.johnson@example.com</a>
                 <div className="sidebar-buttons">
-                    <button className="sidebar-button">Profile</button>
-                    <button className="sidebar-button">Adoption History</button>
-                    <button className="sidebar-button">Following</button>
+                    <button className="sidebar-button">Perfil</button>
+                    <button className="sidebar-button">Historial adopciones</button>
                     <button className="sidebar-button">Settings</button>
                 </div>
             </aside>
             
             {/* Main Content */}
             <main className="main-content">
-                <h1>User Dashboard</h1>
+                <h1>Dashboard de Usuario</h1>
                 <div className="info-sections">
                     <section className="info-card">
-                        <h2>Profile Information</h2>
+                        <h2>Información de perfil</h2>
                         <p>Name: Alex Johnson</p>
                         <p>Email: alex.johnson@example.com</p>
                         <p>Age: 30 years</p> {/* Nueva línea para la edad */}
                         <p>Member Since: January 2023</p>
                     </section>
                     <section className="info-card">
-                        <h2>Adoption History</h2>
+                        <h2>Historial adopciones</h2>
                         <p>Adopted Bella (Dog) on 12th March 2023</p>
                         <p>Adopted Charlie (Cat) on 5th February 2023</p>
                         <p>Adopted Max (Rabbit) on 10th January 2023</p>
