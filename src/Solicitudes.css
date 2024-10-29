@@ -1,0 +1,85 @@
+/* Contenedor principal */
+.requests-container {
+    max-width: 800px;
+    width: 100%;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  /* Título */
+  .requests-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Lista de solicitudes */
+  .requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Tarjeta de solicitud */
+  .request-card {
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: left;
+  }
+  
+  /* Título del nombre del usuario */
+  .request-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  /* Fecha */
+  .request-card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  /* Botones */
+  .request-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .view-profile-btn,
+  .view-request-btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .view-profile-btn {
+    background-color: #e63946; /* Gris oscuro para el botón de perfil */
+  }
+  
+  .view-profile-btn:hover {
+    background-color: #6c757d;
+  }
+  
+  .view-request-btn {
+    background-color: #e63946; /* Rojo similar al estilo de los mockups */
+  }
+  
+  .view-request-btn:hover {
+    background-color: #6c757d;
+  }
+  
