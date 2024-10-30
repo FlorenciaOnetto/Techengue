@@ -1,0 +1,59 @@
+.solicitud-detalle-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .solicitud-detalle-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .solicitud-detalle-info {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .solicitud-detalle-info p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .solicitud-detalle-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .accept-btn, .reject-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .accept-btn {
+    background-color: #4CAF50; /* Verde */
+  }
+  
+  .accept-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .reject-btn {
+    background-color: #e63946; /* Rojo */
+  }
+  
+  .reject-btn:hover {
+    background-color: #c53030;
+  }
+  

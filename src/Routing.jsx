@@ -7,13 +7,13 @@ import PetAdoptionRequests from "./Solicitudes";
 import Registro from './Registro';
 import Login from './Login';
 import NavBar from './NavBar';
+import SolicitudDetalle from "./SolicitudDetalle";
+import SolicitudEstado from "./SolicitudEstado";
 
 export default function Routing() {
     return (
         <BrowserRouter>
-
-            <NavBar /> {/* Colocamos la barra de navegación */}
-
+            <NavBar /> {/* Barra de navegación */}
             <Routes>
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
@@ -22,6 +22,8 @@ export default function Routing() {
                 <Route path="/Solicitudes" element={<PetAdoptionRequests />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Registro />} />
+                <Route path={"/request/:requestId"} element={<SolicitudDetalle />} />
+                <Route path={"/SolicitudEstado"} element={<SolicitudEstado />} />
             </Routes>
         </BrowserRouter>
     );
