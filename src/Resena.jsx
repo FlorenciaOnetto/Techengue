@@ -6,7 +6,7 @@ export default function ResenaForm() {
         <div className="resena-form">
             <h2>Califica tu experiencia</h2>
             <div className="calificacion">
-                <span>⭐⭐⭐⭐⭐</span> {/* Esto se puede hacer dinámico más adelante */}
+                <span>⭐⭐⭐⭐⭐</span> 
             </div>
             <label>Comparte tu experiencia</label>
             <textarea placeholder="Comparte tu historia de adopción y ayuda a otros a encontrar su compañero perfecto"></textarea>
