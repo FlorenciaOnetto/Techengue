@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SolicitudAdopcion.css'; // Importa el archivo CSS
+import './SolicitudAdopcion.css';
 
 const AdoptionRequestForm = () => {
   const navigate = useNavigate();
@@ -68,85 +68,86 @@ const AdoptionRequestForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="adoption-form-container">
-      <h2>Solicitud de Adopción</h2>
+    <div className="form-wrapper">
+      <form onSubmit={handleSubmit} className="adoption-form-container">
+        <h2>Solicitud de Adopción</h2>
 
-      {/* Tipo de Vivienda */}
-      <div>
-        <label className="section-title">Seleccione su tipo de vivienda:</label>
+        {/* Tipo de Vivienda */}
         <div>
-          <label>
-            <input
-              type="checkbox"
-              value="Casa"
-              checked={tipoVivienda.includes('Casa')}
-              onChange={() => handleCheckboxChange('Casa', setTipoVivienda, tipoVivienda)}
-            />
-            Casa
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              value="Departamento"
-              checked={tipoVivienda.includes('Departamento')}
-              onChange={() => handleCheckboxChange('Departamento', setTipoVivienda, tipoVivienda)}
-            />
-            Departamento
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              value="Con patio"
-              checked={tipoVivienda.includes('Con patio')}
-              onChange={() => handleCheckboxChange('Con patio', setTipoVivienda, tipoVivienda)}
-            />
-            Con patio
-          </label>
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              value="Sin patio"
-              checked={tipoVivienda.includes('Sin patio')}
-              onChange={() => handleCheckboxChange('Sin patio', setTipoVivienda, tipoVivienda)}
-            />
-            Sin patio
-          </label>
+          <label className="section-title">Seleccione su tipo de vivienda:</label>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                value="Casa"
+                checked={tipoVivienda.includes('Casa')}
+                onChange={() => handleCheckboxChange('Casa', setTipoVivienda, tipoVivienda)}
+              />
+              Casa
+            </label>
+            <br />
+            <label>
+              <input
+                type="checkbox"
+                value="Departamento"
+                checked={tipoVivienda.includes('Departamento')}
+                onChange={() => handleCheckboxChange('Departamento', setTipoVivienda, tipoVivienda)}
+              />
+              Departamento
+            </label>
+            <br />
+            <label>
+              <input
+                type="checkbox"
+                value="Con patio"
+                checked={tipoVivienda.includes('Con patio')}
+                onChange={() => handleCheckboxChange('Con patio', setTipoVivienda, tipoVivienda)}
+              />
+              Con patio
+            </label>
+            <br />
+            <label>
+              <input
+                type="checkbox"
+                value="Sin patio"
+                checked={tipoVivienda.includes('Sin patio')}
+                onChange={() => handleCheckboxChange('Sin patio', setTipoVivienda, tipoVivienda)}
+              />
+              Sin patio
+            </label>
+          </div>
+          {errors.tipoVivienda && <p className="error-message">{errors.tipoVivienda}</p>}
         </div>
-        {errors.tipoVivienda && <p className="error-message">{errors.tipoVivienda}</p>}
-      </div>
-
-      {/* Otros Animales */}
-      <div>
-        <label className="section-title">¿Tienes otros animales en el hogar?</label>
+        <br />
+        {/* Otros Animales */}
         <div>
-          <label>
-            <input
-              type="radio"
-              name="otrosAnimales"
-              value="Sí"
-              checked={otrosAnimales === 'Sí'}
-              onChange={() => setOtrosAnimales('Sí')}
-            />
-            Sí
-          </label>
-          <br />
-          <label>
-            <input
-              type="radio"
-              name="otrosAnimales"
-              value="No"
-              checked={otrosAnimales === 'No'}
-              onChange={() => setOtrosAnimales('No')}
-            />
-            No
-          </label>
+          <label className="section-title">¿Tienes otros animales en el hogar?</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="otrosAnimales"
+                value="Sí"
+                checked={otrosAnimales === 'Sí'}
+                onChange={() => setOtrosAnimales('Sí')}
+              />
+              Sí
+            </label>
+            <br />
+            <label>
+              <input
+                type="radio"
+                name="otrosAnimales"
+                value="No"
+                checked={otrosAnimales === 'No'}
+                onChange={() => setOtrosAnimales('No')}
+              />
+              No
+            </label>
+          </div>
+          {errors.otrosAnimales && <p className="error-message">{errors.otrosAnimales}</p>}
         </div>
-        {errors.otrosAnimales && <p className="error-message">{errors.otrosAnimales}</p>}
-      </div>
-
+        <br />
       {/* Experiencia con Mascotas */}
       <div>
         <label className="section-title">¿Has tenido mascotas antes?</label>
@@ -204,11 +205,13 @@ const AdoptionRequestForm = () => {
         <label>Acepto los términos y condiciones de adopción</label>
         {errors.aceptacionTerminos && <p className="error-message">{errors.aceptacionTerminos}</p>}
       </div>
-
+<br />
       {/* Botón de Enviar */}
       <button type="submit">Enviar Solicitud</button>
-    </form>
+      </form>
+    </div>
   );
 };
 
 export default AdoptionRequestForm;
+

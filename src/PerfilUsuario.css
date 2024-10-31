@@ -86,3 +86,35 @@
     color: #555;
     margin: 5px 0;
 }
+
+
+.authButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.joinBtn, .loginBtn {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.joinBtn {
+    background-color: #e65a5a;
+}
+
+.joinBtn:hover {
+    background-color: #555;
+}
+
+.loginBtn {
+    background-color: #e65a5a;
+}
+
+.loginBtn:hover {
+    background-color: #555;
+}
+

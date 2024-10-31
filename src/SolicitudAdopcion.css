@@ -1,39 +1,34 @@
-/* Estilos globales */
-body, html {
-    height: 100%;
+/* Estilos específicos para centrar el formulario */
+.form-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #333; /* Color de texto unificado */
-  }
-  
-  /* Contenedor principal del formulario */
-  .adoption-form-container {
+}
+
+/* Contenedor principal del formulario */
+.adoption-form-container {
     max-width: 600px;
     width: 100%;
     padding: 30px;
     background-color: #ffffff; /* Fondo blanco para que resalte */
     border-radius: 12px; /* Bordes redondeados */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    
-  }
+    margin-top: 30px;
+}
   
-  /* Encabezado */
-  .adoption-form-container h2 {
+/* Encabezado */
+.adoption-form-container h2 {
     font-size: 24px;
     font-weight: bold;
     color: #333; /* Color de texto consistente */
     margin-bottom: 20px;
     text-align: center;
-  }
-  
-  /* Campos de entrada de texto */
-  .adoption-form-container input[type="text"],
-  .adoption-form-container textarea,
-  .adoption-form-container select {
+}
+
+/* Campos de entrada de texto */
+.adoption-form-container input[type="text"],
+.adoption-form-container textarea,
+.adoption-form-container select {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -43,64 +38,28 @@ body, html {
     color: #333;
     background-color: #f9fafb;
     transition: border-color 0.3s ease;
-  }
-  
-  .adoption-form-container input[type="text"]:focus,
-  .adoption-form-container textarea:focus,
-  .adoption-form-container select:focus {
-    border-color: #e63946; /* Color rojo suave para resaltar el campo activo */
-    outline: none;
-  }
-  
-  /* Checkbox y etiquetas */
-  .adoption-form-container input[type="checkbox"] {
+}
+
+/* Checkbox y etiquetas */
+.adoption-form-container input[type="checkbox"],
+.adoption-form-container input[type="radio"] {
     margin-right: 8px;
-  }
-  
-  .adoption-form-container label,
-  .adoption-form-container .section-title {
-    font-size: 16px;
-    color: #555; /* Color suave y consistente para las etiquetas */
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-  
-  /* Botón de enviar */
-  .adoption-form-container button {
+}
+
+/* Botón de enviar */
+.adoption-form-container button {
     width: 100%;
     padding: 14px;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #e63946; /* Botón rojo similar al estilo del mockup */
+    background-color: #e63946;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .adoption-form-container button:hover {
-    background-color: #c53030; /* Color más oscuro en hover */
-  }
-  
-  /* Mensajes de error */
-  .error-message {
-    color: #e63946;
-    font-size: 14px;
-    margin-top: -5px;
-    margin-bottom: 15px;
-  }
-  
-  /* Espaciado entre secciones del formulario */
-  .adoption-form-container > div {
-    margin-bottom: 20px;
-  }
-  
-  /* Estilo para los títulos de secciones */
-  .section-title {
-    color: #333;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  
+}
+
+.adoption-form-container button:hover {
+    background-color: #c53030;
+}

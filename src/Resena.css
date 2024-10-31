@@ -2,10 +2,11 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 2rem;
-    background-color: #f4f4f4;
+    background-color: white;
     border-radius: 10px;
     text-align: center;
     font-family: Arial, sans-serif;
+    margin-top: 30px;
 }
 
 .calificacion {
@@ -14,14 +15,16 @@
     margin-bottom: 1rem;
 }
 
-label {
+/* Estilos específicos para ResenaForm */
+.resena-form label {
     display: block;
     font-weight: bold;
     margin-top: 1rem;
     text-align: left;
 }
 
-input, textarea {
+.resena-form input,
+.resena-form textarea {
     width: 100%;
     padding: 0.5rem;
     margin-top: 0.5rem;
@@ -29,6 +32,7 @@ input, textarea {
     border-radius: 5px;
     font-size: 1rem;
 }
+
 
 .subir-fotos {
     display: flex;

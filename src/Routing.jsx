@@ -20,13 +20,13 @@ export default function Routing() {
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
                 <Route path={'/'} element={<App />} />
-                <Route path="/SolicitudAdopcion" element={<AdoptionRequestForm />} />
-                <Route path="/Solicitudes" element={<PetAdoptionRequests />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registro" element={<Registro />} />
-                <Route path={"/request/:requestId"} element={<SolicitudDetalle />} />
-                <Route path={"/SolicitudEstado"} element={<SolicitudEstado />} />
-                <Route path={"/resena"} element={<ResenaForm />} /> 
+                <Route path={'/SolicitudAdopcion'} element={<AdoptionRequestForm />} />
+                <Route path={'/Solicitudes'} element={<PetAdoptionRequests />} />
+                <Route path={'/login'} element={<Login />} />
+                <Route path={'/registro'} element={<Registro />} />
+                <Route path={'/request/:requestId'} element={<SolicitudDetalle />} />
+                <Route path={'/SolicitudEstado'} element={<SolicitudEstado />} />
+                <Route path={'/resena'} element={<ResenaForm />} /> 
             </Routes>
         </BrowserRouter>
     );

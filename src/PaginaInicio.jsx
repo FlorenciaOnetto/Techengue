@@ -1,9 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react';
 import './PaginaInicio.css';
+import { useNavigate } from 'react-router-dom';
 import imagenMascota from './assets/imagen_principal.jpg';
 
 
 export default function PaginaInicio() {
+  const navigate = useNavigate();
+
+    const handleJoin = () => {
+        navigate('/registro'); // Cambia '/registro' a la ruta de la página de registro
+    };
+
+    const handleLogin = () => {
+        navigate('/login'); // Cambia '/login' a la ruta de la página de inicio de sesión
+    };
+
     return (
         <div>
         {/* Header */}
@@ -15,9 +26,9 @@ export default function PaginaInicio() {
             <a href="#featured">Featured</a>
             <a href="/perfilusuario">Perfil de Usuario</a> {/* Nuevo enlace */}
           </nav>
-          <div style={styles.authButtons}>
-            <button style={styles.joinBtn}>Join</button>
-            <button style={styles.loginBtn}>Log in</button>
+          <div className="authButtons">
+              <button className="joinBtn" onClick={handleJoin}>Join</button>
+              <button className="loginBtn" onClick={handleLogin}>Log in</button>
           </div>
         </header>
   
@@ -96,6 +107,9 @@ export default function PaginaInicio() {
       </div>
     );
 };
+
+
+
 
 const styles = {
     header: {
