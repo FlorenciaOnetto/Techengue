@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 import SolicitudDetalle from "./SolicitudDetalle";
 import SolicitudEstado from "./SolicitudEstado";
 import ResenaForm from "./Resena"; 
-
+import PerfilMascota from "./PerfilMascota"; 
 
 export default function Routing() {
     return (
@@ -27,6 +27,7 @@ export default function Routing() {
                 <Route path={'/request/:requestId'} element={<SolicitudDetalle />} />
                 <Route path={'/SolicitudEstado'} element={<SolicitudEstado />} />
                 <Route path={'/resena'} element={<ResenaForm />} /> 
+                <Route path={'/perfilmascota'} element={<PerfilMascota />} /> 
             </Routes>
         </BrowserRouter>
     );
