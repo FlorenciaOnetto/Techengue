@@ -104,6 +104,101 @@ body {
     cursor: pointer;
 }
 
+.user-greeting {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+    margin-left: 1rem; /* Ajusta el espaciado si es necesario */
+}
+
+@media (max-width: 768px) {
+    .user-greeting {
+        text-align: center;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.navbar {
+    width: 100vw;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+  }
+  
+  .user-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .user-greeting {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .logout-button {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .logout-button:hover {
+    background-color: #c53030;
+  }
+
+  .joinBtn {
+    padding: 10px 15px;
+    background-color: #ff6b6b; /* Color de fondo rojo */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .loginBtn {
+    padding: 10px 15px;
+    background-color: white;
+    border: 1px solid #ff6b6b; /* Borde rojo */
+    color: #ff6b6b; /* Color del texto rojo */
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .logout-button {
+    padding: 10px 15px;
+    background-color: #333; /* Ajusta el color según tu preferencia */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  
+
+
+
 
 
 

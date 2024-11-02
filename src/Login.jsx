@@ -1,17 +1,38 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importamos Link de react-router-dom
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Para redireccionar al usuario después del login
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí agregarías la lógica para enviar los datos al backend
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+    try {
+        const response = await fetch('http://localhost:3000/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Datos de respuesta en login:", data); // Debug: imprime la respuesta completa
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('nombre', data.nombre); // Guarda el nombre del usuario
+            alert('Inicio de sesión exitoso');
+            navigate('/inicio');
+            window.location.reload(); // Recarga para actualizar el navbar
+        } else {
+            const errorData = await response.json();
+            alert(`Error en el inicio de sesión: ${errorData.error || 'Credenciales incorrectas'}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error en la conexión con el servidor');
+    }
+};
+
 
   return (
     <div className="login-container">
@@ -41,7 +62,7 @@ function Login() {
           <button type="submit" className="btn btn-primary">Iniciar Sesión</button>
         </form>
         <p className="text-footer">
-          ¿No tienes una cuenta? <Link to="/registro">Regístrate</Link> {/* Usamos Link en lugar de a */}
+          ¿No tienes una cuenta? <Link to="/registro">Regístrate</Link>
         </p>
       </div>
     </div>

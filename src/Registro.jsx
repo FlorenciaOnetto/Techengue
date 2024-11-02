@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importamos Link de react-router-dom
+import { Link } from 'react-router-dom';
 import './Registro.css';
 
 function Registro() {
@@ -7,12 +7,25 @@ function Registro() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí agregarías la lógica para enviar los datos al backend
-    console.log('Nombre:', nombre);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const response = await fetch('http://localhost:3000/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, email, password })
+      });
+      if (response.ok) {
+        alert('Usuario registrado exitosamente');
+        // Puedes redirigir al usuario a la página de login o inicio aquí si lo deseas
+      } else {
+        const errorData = await response.json();
+        alert(`Error en el registro: ${errorData.error || 'Inténtalo de nuevo'}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error en la conexión con el servidor');
+    }
   };
 
   return (
@@ -53,7 +66,7 @@ function Registro() {
           <button type="submit" className="btn btn-primary">Registrarse</button>
         </form>
         <p className="text-footer">
-          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link> {/* Usamos Link en lugar de a */}
+          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
       </div>
     </div>
