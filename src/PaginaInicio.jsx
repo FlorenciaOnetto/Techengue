@@ -9,16 +9,27 @@ export default function PaginaInicio() {
     const [especie, setEspecie] = useState('');
     const [region, setRegion] = useState('');
     const [tamanoAproximado, setTamanoAproximado] = useState('');
-    const [edadRango, setEdadRango] = useState('');
+    const [edadAproximada, setEdadAproximada] = useState(''); // Valor numérico de la edad
+    const [edadUnidad, setEdadUnidad] = useState(''); // Meses o años
 
     const handleSearch = () => {
-        if (especie && region && tamanoAproximado && edadRango) {
-            console.log("Rango de Edad seleccionado:", edadRango);
-            navigate(`/resultados?especie=${especie}&region=${region}&tamano_aproximado=${tamanoAproximado}&edad_rango=${edadRango}`);
-        } else {
-            alert("Por favor, selecciona una opción en todos los campos de búsqueda.");
-        }
-    };
+      if (especie && region && tamanoAproximado && edadAproximada && edadUnidad) {
+          // Imprimir el estado de edadUnidad para depuración
+          console.log("Estado de edadUnidad:", edadUnidad);
+          
+          // Construir la URL de búsqueda
+          const searchURL = `/resultados?especie=${especie}&region=${region}&tamano_aproximado=${tamanoAproximado}&edad_aproximada=${edadAproximada}&edad_unidad=${edadUnidad}`;
+          
+          // Imprimir la URL generada para verificar que todos los parámetros están presentes
+          console.log("URL de consulta generada:", searchURL);
+          
+          // Redirigir a la URL de resultados
+          navigate(searchURL);
+      } else {
+          alert("Por favor, selecciona una opción en todos los campos de búsqueda.");
+      }
+  };
+  
 
     return (
         <div>
@@ -58,12 +69,17 @@ export default function PaginaInicio() {
                         <option value="Mediano">Mediano</option>
                         <option value="Grande">Grande</option>
                     </select>
-                    <select style={styles.input} value={edadRango} onChange={(e) => setEdadRango(e.target.value)}>
-                        <option value="">Rango de Edad</option>
-                        <option value="0-12">0-12 meses</option>
-                        <option value="1-3">1-3 años</option>
-                        <option value="3-7">3-7 años</option>
-                        <option value="7+">7+ años</option>
+                    <input
+                        type="number"
+                        placeholder="Edad Aproximada"
+                        value={edadAproximada}
+                        onChange={(e) => setEdadAproximada(e.target.value)}
+                        style={styles.input}
+                    />
+                    <select style={styles.input} value={edadUnidad} onChange={(e) => setEdadUnidad(e.target.value)}>
+                        <option value="">Unidad</option>
+                        <option value="meses">Meses</option>
+                        <option value="años">Años</option>
                     </select>
                     <button style={styles.searchBtn} onClick={handleSearch}>→</button>
                 </div>
