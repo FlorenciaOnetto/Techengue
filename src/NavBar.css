@@ -194,6 +194,23 @@ body {
     cursor: pointer;
     margin-left: 10px;
   }
+
+/* Botón de Publicar Mascota */
+.btn-publish {
+    padding: 10px 15px;
+    background-color: #ff6b6b; /* Color rojizo */
+    color: white; /* Texto en blanco */
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+
+
+
   
   
 

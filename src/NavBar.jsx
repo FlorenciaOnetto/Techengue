@@ -30,11 +30,14 @@ function NavBar() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/profile">Pet Profile</Link></li>
                 <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><Link to="#profiles">Pet Profiles</Link></li>
                 <li><Link to="#guardians">Guardians</Link></li>
                 <li><Link to="#featured">Featured</Link></li>
                 <li><Link to="/perfilusuario">Perfil de Usuario</Link></li>
+                {nombre && (
+                  <Link to="/publicar-mascota" className="btn-publish">Publicar Mascota</Link>
+                )}
             </ul>
+            
             <div className="user-section">
                 {nombre && <p className="user-greeting">Hola, {nombre}</p>}
                 {nombre ? (

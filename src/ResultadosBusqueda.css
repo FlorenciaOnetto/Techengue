@@ -1,0 +1,79 @@
+.resultados-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.resultados-titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.mascotas-grid {
+    display: flex;
+    flex-direction: column; /* Cambia a columna */
+    gap: 20px;
+    align-items: center; /* Centra las tarjetas horizontalmente */
+}
+
+
+.mascota-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 350px; /* Ajusta el ancho de la tarjeta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex; /* Configura el contenedor de la tarjeta en flex */
+    gap: 15px;
+}
+
+.mascota-info {
+    flex: 1; /* Da espacio al contenido de la tarjeta */
+}
+
+.mascota-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.mascota-card p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+.mascota-card strong {
+    color: #333;
+}
+
+.mascota-foto {
+    width: 100px; /* Ajusta el tamaño de la imagen */
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    align-self: center; /* Centra verticalmente la imagen */
+}
+
+.detalles-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #ff4d4d; /* Rojo como el botón de "Publicar Mascota" */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+    text-align: center;
+}
+
+.detalles-button:hover {
+    background-color: #ff1a1a; /* Más oscuro para hover */
+}
+
+

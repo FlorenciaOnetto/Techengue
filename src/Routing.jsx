@@ -11,11 +11,13 @@ import SolicitudDetalle from "./SolicitudDetalle";
 import SolicitudEstado from "./SolicitudEstado";
 import ResenaForm from "./Resena"; 
 import PerfilMascota from "./PerfilMascota"; 
+import PublicarMascota from './PublicarMascota';
+import ResultadosBusqueda from "./ResultadosBusqueda";
 
 export default function Routing() {
     return (
         <BrowserRouter>
-            <NavBar /> {/* Barra de navegación */}
+            <NavBar />
             <Routes>
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
@@ -27,7 +29,9 @@ export default function Routing() {
                 <Route path={'/request/:requestId'} element={<SolicitudDetalle />} />
                 <Route path={'/SolicitudEstado'} element={<SolicitudEstado />} />
                 <Route path={'/resena'} element={<ResenaForm />} /> 
-                <Route path={'/perfilmascota'} element={<PerfilMascota />} /> 
+                <Route path={'/perfilmascota/:idMascota'} element={<PerfilMascota />} /> 
+                <Route path={"/publicar-mascota"} element={<PublicarMascota />} />
+                <Route path={'/resultados'} element={<ResultadosBusqueda />} /> {/* Nueva ruta */}
             </Routes>
         </BrowserRouter>
     );

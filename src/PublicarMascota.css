@@ -1,0 +1,92 @@
+/* Contenedor principal para centrar el formulario */
+.publish-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* Estilo del formulario */
+.publish-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Encabezado del formulario */
+.publish-form h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Campos de entrada de texto */
+.publish-form input[type="text"],
+.publish-form textarea,
+.publish-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9fafb;
+    box-sizing: border-box;
+}
+
+/* Botón de enviar */
+.publish-form button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff6b6b; /* Rojizo para coincidir con el tema */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.publish-form button:hover {
+    background-color: #e63946; /* Color de hover ligeramente más oscuro */
+}
+
+.publish-form label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+}
+
+.publish-form input[type="file"] {
+    margin-top: 5px;
+}
+
+.success-message {
+    color: #28a745;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.edad-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.edad-input {
+    width: 60px;
+}
+
+.edad-unidad-select {
+    width: 100px;
+}
