@@ -1,14 +1,19 @@
 .dashboard-container {
     display: flex;
     font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .sidebar {
-    width: 250px;
-    padding: 20px;
-    background-color: #f8f8f8;
+    width: 280px;
+    padding: 25px;
+    background-color: #fff;
     text-align: center;
     border-right: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-image {
@@ -16,11 +21,14 @@
     height: 100px;
     border-radius: 50%;
     margin-bottom: 15px;
+    object-fit: cover;
+    border: 3px solid #ff6b6b;
 }
 
 .sidebar h2 {
-    font-size: 1.2em;
-    margin-bottom: 5px;
+    font-size: 1.5em;
+    margin-bottom: 8px;
+    color: #333;
 }
 
 .profile-email {
@@ -29,6 +37,7 @@
     font-size: 0.9em;
     margin-bottom: 20px;
     display: block;
+    font-weight: bold;
 }
 
 .sidebar-buttons {
@@ -38,55 +47,67 @@
 }
 
 .sidebar-button {
-    padding: 10px;
+    padding: 12px;
     background-color: #ff6b6b;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
 }
 
 .sidebar-button:hover {
     background-color: #e65a5a;
+    transform: scale(1.05);
 }
 
 .main-content {
     flex: 1;
-    padding: 20px;
+    padding: 25px;
+    margin-left: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .main-content h1 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
+    font-size: 1.8em;
+    margin-bottom: 25px;
     color: #333;
+    font-weight: bold;
 }
 
 .info-sections {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .info-card {
     flex: 1;
-    background-color: #f0f0f0;
-    padding: 15px;
-    border-radius: 8px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
 }
 
 .info-card h2 {
     font-size: 1.2em;
     color: #333;
     margin-bottom: 10px;
+    border-bottom: 2px solid #ff6b6b;
+    padding-bottom: 5px;
 }
 
 .info-card p {
-    font-size: 0.9em;
+    font-size: 0.95em;
     color: #555;
-    margin: 5px 0;
+    margin: 8px 0;
+    line-height: 1.4;
 }
-
 
 .authButtons {
     display: flex;
@@ -94,27 +115,47 @@
 }
 
 .joinBtn, .loginBtn {
-    padding: 10px 20px;
+    padding: 12px 25px;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .joinBtn {
-    background-color: #e65a5a;
+    background-color: #ff6b6b;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .joinBtn:hover {
-    background-color: #555;
+    background-color: #e65a5a;
+    transform: scale(1.05);
 }
 
 .loginBtn {
-    background-color: #e65a5a;
+    background-color: #ff6b6b;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .loginBtn:hover {
-    background-color: #555;
+    background-color: #e65a5a;
+    transform: scale(1.05);
 }
 
+.delete-button {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #e65a5a;
+}

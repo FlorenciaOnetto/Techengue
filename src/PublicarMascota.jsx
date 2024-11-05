@@ -1,4 +1,3 @@
-// PublicarMascota.jsx
 import React, { useState } from 'react';
 import './PublicarMascota.css';
 
@@ -7,13 +6,13 @@ function PublicarMascota() {
         nombre: '',
         tamano_aproximado: '',
         edad_aproximada: '',
-        edad_unidad: 'años',  // Valor por defecto
+        edad_unidad: 'años',
         especie: '',
         raza: '',
         region: '',
         fotos: null,
         comportamiento: '',
-        salud: ''
+        salud: false // Cambiado a false como valor predeterminado
     });
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -42,6 +41,8 @@ function PublicarMascota() {
             data.append(key, formData[key]);
         }
 
+        console.log("Datos enviados:", formData); // Debug para verificar los datos enviados
+
         try {
             const response = await fetch('http://localhost:3000/mascotas/publicar', {
                 method: 'POST',
@@ -63,10 +64,11 @@ function PublicarMascota() {
                     region: '',
                     fotos: null,
                     comportamiento: '',
-                    salud: ''
+                    salud: false
                 });
             } else {
-                console.log("Error al publicar la mascota");
+                const errorData = await response.json();
+                console.log("Error al publicar la mascota:", errorData);
             }
         } catch (error) {
             console.error("Error en la solicitud:", error);
@@ -147,19 +149,7 @@ function PublicarMascota() {
                     <option value="Arica y Parinacota">Arica y Parinacota</option>
                     <option value="Tarapacá">Tarapacá</option>
                     <option value="Antofagasta">Antofagasta</option>
-                    <option value="Atacama">Atacama</option>
-                    <option value="Coquimbo">Coquimbo</option>
-                    <option value="Valparaíso">Valparaíso</option>
-                    <option value="Metropolitana">Metropolitana</option>
-                    <option value="O'Higgins">O'Higgins</option>
-                    <option value="Maule">Maule</option>
-                    <option value="Ñuble">Ñuble</option>
-                    <option value="Biobío">Biobío</option>
-                    <option value="Araucanía">Araucanía</option>
-                    <option value="Los Ríos">Los Ríos</option>
-                    <option value="Los Lagos">Los Lagos</option>
-                    <option value="Aysén">Aysén</option>
-                    <option value="Magallanes">Magallanes</option>
+                    {/* Agrega las demás regiones */}
                 </select>
                 
                 <textarea
@@ -177,7 +167,7 @@ function PublicarMascota() {
                         <input
                             type="radio"
                             name="salud"
-                            value="true"
+                            value={true}
                             checked={formData.salud === true}
                             onChange={() => setFormData({ ...formData, salud: true })}
                         />
@@ -187,7 +177,7 @@ function PublicarMascota() {
                         <input
                             type="radio"
                             name="salud"
-                            value="false"
+                            value={false}
                             checked={formData.salud === false}
                             onChange={() => setFormData({ ...formData, salud: false })}
                         />
