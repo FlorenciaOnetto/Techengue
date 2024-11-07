@@ -1,4 +1,3 @@
-// PublicarMascota.jsx
 import React, { useState } from 'react';
 import './PublicarMascota.css';
 
@@ -7,13 +6,14 @@ function PublicarMascota() {
         nombre: '',
         tamano_aproximado: '',
         edad_aproximada: '',
-        edad_unidad: 'años',  // Valor por defecto
+        edad_unidad: 'años',
         especie: '',
         raza: '',
         region: '',
         fotos: null,
         comportamiento: '',
-        salud: ''
+        salud: false,
+        detallesSalud: '' // Campo para detalles de salud
     });
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -63,10 +63,12 @@ function PublicarMascota() {
                     region: '',
                     fotos: null,
                     comportamiento: '',
-                    salud: ''
+                    salud: false,
+                    detallesSalud: '' // Reinicia el campo de detalles de salud
                 });
             } else {
-                console.log("Error al publicar la mascota");
+                const errorData = await response.json();
+                console.log("Error al publicar la mascota:", errorData);
             }
         } catch (error) {
             console.error("Error en la solicitud:", error);
@@ -144,7 +146,6 @@ function PublicarMascota() {
                     required
                 >
                     <option value="">Selecciona una región</option>
-                    <option value="Arica y Parinacota">Arica y Parinacota</option>
                     <option value="Tarapacá">Tarapacá</option>
                     <option value="Antofagasta">Antofagasta</option>
                     <option value="Atacama">Atacama</option>
@@ -164,7 +165,7 @@ function PublicarMascota() {
                 
                 <textarea
                     name="comportamiento"
-                    placeholder="Comportamiento"
+                    placeholder="Descripción"
                     value={formData.comportamiento}
                     onChange={handleChange}
                     rows="3"
@@ -177,7 +178,7 @@ function PublicarMascota() {
                         <input
                             type="radio"
                             name="salud"
-                            value="true"
+                            value={true}
                             checked={formData.salud === true}
                             onChange={() => setFormData({ ...formData, salud: true })}
                         />
@@ -187,13 +188,23 @@ function PublicarMascota() {
                         <input
                             type="radio"
                             name="salud"
-                            value="false"
+                            value={false}
                             checked={formData.salud === false}
                             onChange={() => setFormData({ ...formData, salud: false })}
                         />
                         No tiene problemas de salud
                     </label>
                 </div>
+
+                {formData.salud && (
+                    <textarea
+                        name="detallesSalud"
+                        placeholder="Detalles de problemas de salud"
+                        value={formData.detallesSalud}
+                        onChange={handleChange}
+                        rows="3"
+                    ></textarea>
+                )}
 
                 <label>Fotos:</label>
                 <input

@@ -34,6 +34,7 @@ export default function PerfilMascota() {
                     <p>Raza: {mascota.raza}</p>
                     <p>Comportamiento: {mascota.comportamiento}</p>
                     <p>Salud: {mascota.salud ? 'Con problemas de salud' : 'No tiene problemas de salud'}</p>
+                    {mascota.salud && <p>Detalles de Salud: {mascota.detallesSalud}</p>} {/* Mostrar detalles si hay problemas de salud */}
                     <div className="button-container">
                         <button className="contact-button">Contactar Guardian</button>
                         <button className="adoption-button">Solicitudes</button>

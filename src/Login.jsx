@@ -15,14 +15,20 @@ function Login() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
+
         if (response.ok) {
             const data = await response.json();
             console.log("Datos de respuesta en login:", data); // Debug: imprime la respuesta completa
+            
+            // Guarda el token y el nombre en localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('nombre', data.nombre); // Guarda el nombre del usuario
+
             alert('Inicio de sesión exitoso');
             navigate('/inicio');
-            window.location.reload(); // Recarga para actualizar el navbar
+            
+            // Recarga la página para reflejar los cambios en el navbar (opcional)
+            window.location.reload();
         } else {
             const errorData = await response.json();
             alert(`Error en el inicio de sesión: ${errorData.error || 'Credenciales incorrectas'}`);
@@ -32,6 +38,7 @@ function Login() {
         alert('Error en la conexión con el servidor');
     }
 };
+
 
 
   return (
