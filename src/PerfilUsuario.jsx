@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './PerfilUsuario.css';
-import './PerfilMascota.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function PerfilUsuario() {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [mascotas, setMascotas] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
     const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -60,14 +62,42 @@ export default function PerfilUsuario() {
         fetchUserMascotas();
     }, []);
 
-    // Función para eliminar una mascota
-    const handleDeleteMascota = async (id_mascota) => {
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleUpdateProfile = async () => {
         const token = localStorage.getItem('token');
-        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta mascota?");
+        try {
+            const response = await fetch('http://localhost:3000/auth/profile', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre, email })
+            });
+
+            if (response.ok) {
+                setIsEditing(false);
+                alert('Perfil actualizado exitosamente');
+            } else {
+                console.error('Error al actualizar el perfil');
+            }
+        } catch (error) {
+            console.error('Error en la conexión con el servidor:', error);
+        }
+    };
+
+    const handleDeleteAccount = async () => {
+        const confirmDelete = window.confirm("¿Estás seguro que quieres eliminar tu cuenta?");
         if (!confirmDelete) return;
 
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
         try {
-            const response = await fetch(`http://localhost:3000/mascotas/${id_mascota}`, {
+            const response = await fetch('http://localhost:3000/auth/profile', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -75,14 +105,16 @@ export default function PerfilUsuario() {
             });
 
             if (response.ok) {
-                // Eliminar la mascota del estado después de eliminarla en el backend
-                setMascotas(mascotas.filter(mascota => mascota.id_mascota !== id_mascota));
-                alert("Mascota eliminada exitosamente.");
+                alert('Cuenta eliminada exitosamente');
+                localStorage.removeItem('token');
+                localStorage.removeItem('nombre');
+                navigate('/login');
+                window.location.reload();
             } else {
-                console.error("Error al eliminar la mascota.");
+                console.error('Error al eliminar la cuenta');
             }
         } catch (error) {
-            console.error("Error en la conexión con el servidor:", error);
+            console.error('Error en la conexión con el servidor:', error);
         }
     };
 
@@ -94,17 +126,41 @@ export default function PerfilUsuario() {
                 <a href={`mailto:${email}`} className="profile-email">{email || 'Email no disponible'}</a>
                 <div className="sidebar-buttons">
                     <button className="sidebar-button">Historial adopciones</button>
-                    <button className="sidebar-button">Settings</button>
+                    <button className="sidebar-button" onClick={() => navigate('/settings')}>Settings</button>
                 </div>
+                <button className="delete-account-button" onClick={handleDeleteAccount}>
+                    Eliminar cuenta
+                </button>
             </aside>
-            
+
             <main className="main-content">
                 <h1>Dashboard de Usuario</h1>
                 <div className="info-sections">
                     <section className="info-card">
                         <h2>Información de perfil</h2>
-                        <p><strong>Nombre:</strong> {nombre}</p>
-                        <p><strong>Email:</strong> {email}</p>
+                        {isEditing ? (
+                            <div>
+                                <input 
+                                    type="text" 
+                                    value={nombre} 
+                                    onChange={(e) => setNombre(e.target.value)} 
+                                    placeholder="Nombre" 
+                                />
+                                <input 
+                                    type="email" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    placeholder="Email" 
+                                />
+                                <button onClick={handleUpdateProfile}>Actualizar</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <p><strong>Nombre:</strong> {nombre}</p>
+                                <p><strong>Email:</strong> {email}</p>
+                                <button className="sidebar-button" onClick={handleEdit}>Editar información</button>
+                            </div>
+                        )}
                     </section>
 
                     <section className="info-card">

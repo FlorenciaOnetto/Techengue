@@ -19,9 +19,19 @@ function ResultadosBusqueda() {
             const region = query.get('region');
             const tamano_aproximado = query.get('tamano_aproximado');
             const edad_aproximada = query.get('edad_aproximada');
-
+            const edad_unidad = query.get('edad_unidad');
+    
+            // Agregar log para verificar los valores de los filtros
+            console.log("Filtros de búsqueda:", {
+                especie,
+                region,
+                tamano_aproximado,
+                edad_aproximada,
+                edad_unidad,
+            });
+    
             try {
-                const response = await fetch(`http://localhost:3000/mascotas/buscar?especie=${especie}&region=${region}&tamano_aproximado=${tamano_aproximado}&edad_aproximada=${edad_aproximada}`);
+                const response = await fetch(`http://localhost:3000/mascotas/buscar?especie=${especie}&region=${region}&tamano_aproximado=${tamano_aproximado}&edad_aproximada=${edad_aproximada}&edad_unidad=${edad_unidad}`);
                 if (!response.ok) {
                     throw new Error("Error al buscar mascotas");
                 }
@@ -34,13 +44,16 @@ function ResultadosBusqueda() {
                 setMascotas([]);
             }
         };
-
+    
         fetchMascotas();
     }, [query]);
+    
 
     const handleViewDetails = (idMascota) => {
+        console.log(`Navegando a /perfilmascota/${idMascota}`);
         navigate(`/perfilmascota/${idMascota}`);
     };
+    
 
     return (
         <div className="resultados-container">
@@ -68,6 +81,7 @@ function ResultadosBusqueda() {
                                 >
                                     Ver detalles
                                 </button>
+
                             </div>
                         ))}
                     </div>

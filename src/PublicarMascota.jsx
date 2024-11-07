@@ -153,8 +153,8 @@ function PublicarMascota() {
                 </select>
                 
                 <textarea
-                    name="comportamiento"
-                    placeholder="Comportamiento"
+                    name="descripción"
+                    placeholder="Descripción"
                     value={formData.comportamiento}
                     onChange={handleChange}
                     rows="3"

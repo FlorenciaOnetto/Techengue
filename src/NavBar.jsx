@@ -7,10 +7,24 @@ function NavBar() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const nombreGuardado = localStorage.getItem('nombre');
-        if (nombreGuardado) {
-            setNombre(nombreGuardado);
-        }
+        const updateUser = () => {
+            const token = localStorage.getItem('token');
+            const nombreGuardado = localStorage.getItem('nombre');
+            if (token && nombreGuardado) {
+                setNombre(nombreGuardado);
+            } else {
+                setNombre('');
+            }
+        };
+
+        updateUser();
+
+        // Listener para cambios en localStorage
+        window.addEventListener('storage', updateUser);
+
+        return () => {
+            window.removeEventListener('storage', updateUser);
+        };
     }, []);
 
     const handleLogout = () => {
