@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PaginaInicio.css';
 import { useNavigate } from 'react-router-dom';
 import imagenMascota from './assets/imagen_principal.jpg';
@@ -11,6 +11,8 @@ export default function PaginaInicio() {
     const [tamanoAproximado, setTamanoAproximado] = useState('');
     const [edadAproximada, setEdadAproximada] = useState(''); // Valor numérico de la edad
     const [edadUnidad, setEdadUnidad] = useState(''); // Meses o años
+    const [mascotas, setMascotas] = useState([]); 
+    const [error, setError] = useState(null)
 
     const handleSearch = () => {
       if (especie && region && tamanoAproximado && edadAproximada && edadUnidad) {
@@ -29,7 +31,29 @@ export default function PaginaInicio() {
           alert("Por favor, selecciona una opción en todos los campos de búsqueda.");
       }
   };
-  
+
+  useEffect(() => {
+    const fetchMascotas = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/mascotas/todas');
+            if (!response.ok) {
+                throw new Error('Error en la respuesta de la API');
+            }
+            const data = await response.json();
+            setMascotas(data); // Asumiendo que 'data' es un array
+        } catch (error) {
+            console.error('Error al cargar las mascotas:', error);
+            setError('Hubo un problema al cargar las mascotas.');
+        }
+    };
+
+    fetchMascotas();
+}, []);
+
+    const handleViewDetails = (idMascota) => {
+        navigate(`/perfilmascota/${idMascota}`);
+
+    };
 
     return (
         <div>
@@ -84,6 +108,34 @@ export default function PaginaInicio() {
                     <button style={styles.searchBtn} onClick={handleSearch}>→</button>
                 </div>
             </section>
+            
+            <h2 className="resultados-titulo">Mascotas Disponibles para Adopción</h2>
+            <section style={styles.mascotasSection}>
+                {mascotas.map(mascota => (
+                    <div key={mascota.id_mascota} className="mascota-card">
+                        <div className="mascota-info">
+                            <h3>{mascota.nombre}</h3>
+                            <p><strong>Especie:</strong> {mascota.especie}</p>
+                            <p><strong>Región:</strong> {mascota.region}</p>
+                            <p><strong>Tamaño Aproximado:</strong> {mascota.tamano_aproximado}</p>
+                            <p><strong>Edad Aproximada:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
+                        </div>
+                        {mascota.fotos && (
+                            <img 
+                                src={`http://localhost:3000/uploads/${mascota.fotos}`} 
+                                alt={mascota.nombre} 
+                                className="mascota-foto" 
+                            />
+                        )}
+                        <button 
+                            onClick={() => handleViewDetails(mascota.id_mascota)} 
+                            className="detalles-button"
+                        >
+                            Ver detalles
+                        </button>
+                    </div>
+                ))}
+            </section>
 
             <footer className="footer">
                 <p>&copy; TailWaggers</p>
@@ -128,4 +180,11 @@ const styles = {
         height: 'auto',
         objectFit: 'cover',
     },
+    mascotasSection: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        padding: '20px',
+        flexGrow: 1,
+    }
 };

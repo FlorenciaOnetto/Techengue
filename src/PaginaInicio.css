@@ -6,7 +6,7 @@
     font-family: Arial, sans-serif;
   }
   
-  .navbar {
+.navbar {
     display: flex;
     justify-content: space-between;
     padding: 1rem;
@@ -74,5 +74,40 @@
     padding: 2rem;
     background-color: #333;
     color: white;
+    margin-top: 20px;
   }
-  
+
+.mascota-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Los elementos se alinean en columna */
+  width: 300px; /* Ajustamos el tamaño de la tarjeta */
+  height: auto; /* Se ajusta automáticamente según el contenido */
+}
+
+.mascota-foto {
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: 250px; /* Ajustamos la altura de la imagen */
+  object-fit: cover; /* Asegura que la imagen ocupe el espacio sin distorsionarse */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.mascota-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mascotas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
