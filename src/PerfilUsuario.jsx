@@ -118,6 +118,31 @@ export default function PerfilUsuario() {
         }
     };
 
+    const handleDeleteMascota = async (id_mascota) => {
+        const token = localStorage.getItem('token');
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta mascota?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`http://localhost:3000/mascotas/${id_mascota}`, { // Corregido aquí
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}` // Corregido aquí
+                }
+            });
+
+            if (response.ok) {
+                // Eliminar la mascota del estado después de eliminarla en el backend
+                setMascotas(mascotas.filter(mascota => mascota.id_mascota !== id_mascota));
+                alert("Mascota eliminada exitosamente.");
+            } else {
+                console.error("Error al eliminar la mascota.");
+            }
+        } catch (error) {
+            console.error("Error en la conexión con el servidor:", error);
+        }
+    };
+
     return (
         <div className="dashboard-container">
             <aside className="sidebar">

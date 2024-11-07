@@ -12,7 +12,8 @@ function PublicarMascota() {
         region: '',
         fotos: null,
         comportamiento: '',
-        salud: false // Cambiado a false como valor predeterminado
+        salud: false,
+        detallesSalud: '' // Campo para detalles de salud
     });
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -41,8 +42,6 @@ function PublicarMascota() {
             data.append(key, formData[key]);
         }
 
-        console.log("Datos enviados:", formData); // Debug para verificar los datos enviados
-
         try {
             const response = await fetch('http://localhost:3000/mascotas/publicar', {
                 method: 'POST',
@@ -64,7 +63,8 @@ function PublicarMascota() {
                     region: '',
                     fotos: null,
                     comportamiento: '',
-                    salud: false
+                    salud: false,
+                    detallesSalud: '' // Reinicia el campo de detalles de salud
                 });
             } else {
                 const errorData = await response.json();
@@ -146,14 +146,25 @@ function PublicarMascota() {
                     required
                 >
                     <option value="">Selecciona una región</option>
-                    <option value="Arica y Parinacota">Arica y Parinacota</option>
                     <option value="Tarapacá">Tarapacá</option>
                     <option value="Antofagasta">Antofagasta</option>
-                    {/* Agrega las demás regiones */}
+                    <option value="Atacama">Atacama</option>
+                    <option value="Coquimbo">Coquimbo</option>
+                    <option value="Valparaíso">Valparaíso</option>
+                    <option value="Metropolitana">Metropolitana</option>
+                    <option value="O'Higgins">O'Higgins</option>
+                    <option value="Maule">Maule</option>
+                    <option value="Ñuble">Ñuble</option>
+                    <option value="Biobío">Biobío</option>
+                    <option value="Araucanía">Araucanía</option>
+                    <option value="Los Ríos">Los Ríos</option>
+                    <option value="Los Lagos">Los Lagos</option>
+                    <option value="Aysén">Aysén</option>
+                    <option value="Magallanes">Magallanes</option>
                 </select>
                 
                 <textarea
-                    name="descripción"
+                    name="comportamiento"
                     placeholder="Descripción"
                     value={formData.comportamiento}
                     onChange={handleChange}
@@ -184,6 +195,16 @@ function PublicarMascota() {
                         No tiene problemas de salud
                     </label>
                 </div>
+
+                {formData.salud && (
+                    <textarea
+                        name="detallesSalud"
+                        placeholder="Detalles de problemas de salud"
+                        value={formData.detallesSalud}
+                        onChange={handleChange}
+                        rows="3"
+                    ></textarea>
+                )}
 
                 <label>Fotos:</label>
                 <input
