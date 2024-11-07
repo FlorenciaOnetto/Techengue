@@ -45,3 +45,48 @@
     background-color: #f44336; /* Red */
     color: white;
   }
+
+  .button-container button {
+    margin-top: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+    background-color: #e65a5a;
+}
+
+.edit-button {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Espaciado adicional si lo deseas */
+}
+
+.edit-button:hover {
+  background-color: #45a049; /* Color más oscuro al pasar el ratón */
+}
+
+.edit-button {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Espaciado adicional si lo deseas */
+}
+
+.edit-button:hover {
+  background-color: #45a049; /* Color más oscuro al pasar el ratón */
+}

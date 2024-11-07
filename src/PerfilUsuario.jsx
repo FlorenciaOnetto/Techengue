@@ -124,15 +124,14 @@ export default function PerfilUsuario() {
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/mascotas/${id_mascota}`, { // Corregido aquí
+            const response = await fetch(`http://localhost:3000/mascotas/${id_mascota}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${token}` // Corregido aquí
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
             if (response.ok) {
-                // Eliminar la mascota del estado después de eliminarla en el backend
                 setMascotas(mascotas.filter(mascota => mascota.id_mascota !== id_mascota));
                 alert("Mascota eliminada exitosamente.");
             } else {
@@ -141,6 +140,10 @@ export default function PerfilUsuario() {
         } catch (error) {
             console.error("Error en la conexión con el servidor:", error);
         }
+    };
+
+    const handleEditMascota = (id_mascota) => {
+        navigate(`/perfilmascota/${id_mascota}`); // Redirigir a la página de edición de mascota
     };
 
     return (
@@ -205,6 +208,12 @@ export default function PerfilUsuario() {
                                             <p><strong>Raza:</strong> {mascota.raza}</p>
                                             <p><strong>Edad:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
                                             <p><strong>Región:</strong> {mascota.region}</p>
+                                            <button 
+                                                className="edit-button" 
+                                                onClick={() => handleEditMascota(mascota.id_mascota)}
+                                            >
+                                                Editar
+                                            </button>
                                             <button 
                                                 className="delete-button" 
                                                 onClick={() => handleDeleteMascota(mascota.id_mascota)}

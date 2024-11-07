@@ -194,4 +194,20 @@
     background-color: #e65a5a; 
 }
 
+.edit-button {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #45a049; /* Color de hover */
+}
+
 
