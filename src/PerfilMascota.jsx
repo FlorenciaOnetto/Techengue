@@ -1,11 +1,12 @@
 // PerfilMascota.jsx
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './PerfilMascota.css';
 
 export default function PerfilMascota() {
     const { idMascota } = useParams();
     const [mascota, setMascota] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMascota = async () => {
@@ -23,6 +24,10 @@ export default function PerfilMascota() {
 
     if (!mascota) return <p>Cargando...</p>;
 
+    const handleSolicitudClick = () => {
+        navigate(`/SolicitudAdopcion/${idMascota}`);
+    };
+
     return (
         <div className="pet-profile">
             <div className="profile-card">
@@ -37,7 +42,7 @@ export default function PerfilMascota() {
                     {mascota.salud && <p>Detalles de Salud: {mascota.detallesSalud}</p>} {/* Mostrar detalles si hay problemas de salud */}
                     <div className="button-container">
                         <button className="contact-button">Contactar Guardian</button>
-                        <button className="adoption-button">Solicitudes</button>
+                        <button className="adoption-button" onClick={handleSolicitudClick}>Enviar Solicitud Adopción</button>
                     </div>
                 </div>
             </div>

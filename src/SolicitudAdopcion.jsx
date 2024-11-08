@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './SolicitudAdopcion.css';
 
 const AdoptionRequestForm = () => {
+  const { idMascota } = useParams();
   const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    // Obtén el ID del usuario desde localStorage al cargar el componente
+    const idFromLocalStorage = localStorage.getItem('userId');
+    if (idFromLocalStorage) {
+      setUserId(idFromLocalStorage);
+    }
+  }, []);
 
   // Estado para cada campo del formulario
   const [tipoVivienda, setTipoVivienda] = useState([]);
@@ -11,6 +21,7 @@ const AdoptionRequestForm = () => {
   const [experienciaPrevia, setExperienciaPrevia] = useState(null);
   const [descripcionExperiencia, setDescripcionExperiencia] = useState('');
   const [motivos, setMotivos] = useState('');
+  const [contacto, setContacto] = useState('');
   const [aceptacionTerminos, setAceptacionTerminos] = useState(false);
 
   // Estado para los mensajes de error
@@ -51,19 +62,40 @@ const AdoptionRequestForm = () => {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       const data = {
-        tipoVivienda,
-        otrosAnimales,
-        experienciaPrevia,
-        descripcionExperiencia,
-        motivos,
-        aceptacionTerminos,
+        id_mascota: idMascota, 
+        id_potencial_adoptante: userId,  
+        estado: 'pendiente',  
+        razones: motivos,  
+        descripcion_hogar: tipoVivienda,  
+        experiencia: experienciaPrevia,  
+        contacto: contacto, 
+        created: new Date()
       };
-      console.log(data);
-      navigate('/'); // Redirige a la página de inicio
+
+      try {
+        const response = await fetch('http://localhost:3000/solicitudes/crear', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+      
+        if (response.ok) {
+          console.log('Solicitud enviada con éxito');
+          navigate('/'); // Redirige a la página de inicio solo si la solicitud es exitosa
+        } else {
+          const errorMessage = await response.text(); // Obtener el cuerpo del mensaje de error
+          console.error('Error al enviar la solicitud:', errorMessage);
+        }
+      } catch (error) {
+        // Aquí 'error' es la variable que captura cualquier excepción lanzada durante el bloque try
+        console.error('Error en la conexión:', error);  // 'error' es un objeto Error que contiene detalles sobre la excepción
+      }      
     }
   };
 
@@ -193,6 +225,18 @@ const AdoptionRequestForm = () => {
           placeholder="Explica tus motivos para adoptar"
         ></textarea>
         {errors.motivos && <p className="error-message">{errors.motivos}</p>}
+      </div>
+
+      {/* Campo de Contacto */}
+      <div>
+        <label className="section-title">Información de Contacto</label>
+        <input
+          type="text"
+          value={contacto}
+          onChange={(e) => setContacto(e.target.value)}
+          placeholder="Ingresa tu número de teléfono o correo"
+        />
+        {errors.contacto && <p className="error-message">{errors.contacto}</p>}
       </div>
 
       {/* Aceptación de Términos */}

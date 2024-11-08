@@ -37,7 +37,7 @@ export default function PaginaInicio() {
         try {
             const response = await fetch('http://localhost:3000/mascotas/todas');
             if (!response.ok) {
-                throw new Error('Error en la respuesta de la API');
+                throw new Error(`Error en la respuesta de la API${response.status}`);
             }
             const data = await response.json();
             setMascotas(data); // Asumiendo que 'data' es un array
