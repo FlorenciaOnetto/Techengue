@@ -76,12 +76,17 @@ export default function PerfilMascota() {
 
     if (!mascota) return <p>Cargando...</p>;
 
+    const handleSolicitudClick = () => {
+        navigate(`/SolicitudAdopcion/${idMascota}`);
+    };
+
     return (
         <div className="pet-profile">
             <div className="profile-card">
                 <img src={`http://localhost:3000/uploads/${mascota.fotos}`} alt={mascota.nombre} className="pet-image" />
                 <div className="pet-details">
                     <h2>{mascota.nombre}</h2>
+
                     {isEditing ? (
                         <>
                             <p>
@@ -190,7 +195,7 @@ export default function PerfilMascota() {
                             <p><strong>Región:</strong> {mascota.region}</p>
                             <div className="button-container">
                                 <button className="contact-button">Contactar Guardian</button>
-                                <button className="adoption-button">Solicitudes</button>
+                                <button className="adoption-button" onClick={handleSolicitudClick}>Enviar Solicitud Adopción</button>
                                 {isOwner && <button className="edit-button" onClick={handleEdit}>Editar</button>} {/* Mostrar botón de editar solo si el usuario es el dueño */}
                             </div>
                         </>
