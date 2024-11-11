@@ -64,14 +64,16 @@ const AdoptionRequestForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
+    
     if (validateForm()) {
       const data = {
         id_mascota: idMascota, 
         id_potencial_adoptante: userId,  
         estado: 'pendiente',  
         razones: motivos,  
-        descripcion_hogar: tipoVivienda,  
-        experiencia: experienciaPrevia,  
+        descripcion_hogar: tipoVivienda.toString(),  
+        experiencia: experienciaPrevia === 'Sí',  
         contacto: contacto, 
         created: new Date()
       };
@@ -80,9 +82,10 @@ const AdoptionRequestForm = () => {
         const response = await fetch('http://localhost:3000/solicitudes/crear', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
         });
       
         if (response.ok) {
