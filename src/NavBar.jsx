@@ -41,10 +41,9 @@ function NavBar() {
                 <h1>TailWaggers</h1>
             </div>
             <ul className="navbar-links">
-                <li><Link to="/">Home</Link></li>
+                <li><Link to="/inicio">Inicio</Link></li>
                 <li><Link to="/profile">Pet Profile</Link></li>
                 <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><Link to="#guardians">Guardians</Link></li>
                 <li><Link to="#featured">Featured</Link></li>
                 <li><Link to="/perfilusuario">Perfil de Usuario</Link></li>
                 {nombre && (
