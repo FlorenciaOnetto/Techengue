@@ -77,7 +77,12 @@ export default function PerfilMascota() {
     };
 
     const handleRealizarSolicitud = () => {
-        navigate(`/SolicitudAdopcion/${mascota.id_mascota}`);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert("Debes iniciar sesión primero.");
+        } else {
+            navigate(`/SolicitudAdopcion/${mascota.id_mascota}`);
+        }
     };
 
     if (!mascota) return <p>Cargando...</p>;

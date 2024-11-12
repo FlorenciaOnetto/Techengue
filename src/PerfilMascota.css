@@ -14,11 +14,15 @@
   }
   
   .pet-image {
-    width: 150px;
-    height: 150px;
+    width: 100%; /* Hace que la imagen ocupe el 100% del contenedor disponible */
+    height: auto; /* Mantiene la proporción original de la imagen */
+    max-width: 300px; /* Limita el tamaño máximo del ancho a 300px */
+    max-height: 300px; /* Limita el tamaño máximo de la altura a 300px */
+    object-fit: contain; /* Asegura que la imagen mantenga su proporción y se ajuste al contenedor sin deformarse */
     border-radius: 10px;
     margin-right: 20px;
   }
+  
   
   .pet-details {
     flex: 1;
@@ -26,67 +30,40 @@
   
   .button-container {
     margin-top: 20px;
+    display: flex;
+    gap: 20px; /* Añade un espacio de 20px entre los botones */
+    flex-wrap: wrap; /* Permite que los botones se ajusten en múltiples filas si es necesario */
   }
   
-  .contact-button, .adoption-button {
-    padding: 10px 20px;
-    margin-right: 10px;
+  .button-container button {
+    padding: 10px 20px; /* Asegura un tamaño consistente para los botones */
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
   .contact-button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; /* Verde */
     color: white;
   }
   
   .adoption-button {
-    background-color: #f44336; /* Red */
+    background-color: #f44336; /* Rojo */
     color: white;
   }
-
-  .button-container button {
-    margin-top: 10px;
-    background-color: #ff6b6b;
+  
+  .solicitudes-button, .edit-button, .solicitud-button {
+    background-color: #ff6b6b; /* Color de fondo rojo claro */
+    color: white; /* Color del texto blanco */
+  }
+  
+  .volver-button {
+    background-color: #6c757d; /* Gris */
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 8px 12px;
-    transition: background-color 0.3s ease;
-}
-
-.button-container button:hover {
-    background-color: #e65a5a;
-}
-
-.edit-button {
-  padding: 10px 20px;
-  background-color: #4CAF50; /* Verde */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px; /* Espaciado adicional si lo deseas */
-}
-
-.edit-button:hover {
-  background-color: #45a049; /* Color más oscuro al pasar el ratón */
-}
-
-.edit-button {
-  padding: 10px 20px;
-  background-color: #4CAF50; /* Verde */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px; /* Espaciado adicional si lo deseas */
-}
-
-.edit-button:hover {
-  background-color: #45a049; /* Color más oscuro al pasar el ratón */
-}
+  }
+  
+  .button-container button:hover {
+    background-color: #e65a5a; /* Color de hover para todos los botones */
+  }
+  

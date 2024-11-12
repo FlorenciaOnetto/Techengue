@@ -8,12 +8,19 @@ const AdoptionRequestForm = () => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Obtén el ID del usuario desde localStorage al cargar el componente
-    const idFromLocalStorage = localStorage.getItem('userId');
-    if (idFromLocalStorage) {
-      setUserId(idFromLocalStorage);
+    // Obtener el userId del localStorage
+    const userId = localStorage.getItem('userId');
+    
+    // Imprimir el userId en la consola para verificar si existe o no
+    console.log('UserId en localStorage:', userId);
+
+    // Verificar si el userId no existe
+    if (!userId) {
+      console.log('No hay userId, redirigiendo a login...');
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);
+
 
   // Estado para cada campo del formulario
   const [tipoVivienda, setTipoVivienda] = useState([]);

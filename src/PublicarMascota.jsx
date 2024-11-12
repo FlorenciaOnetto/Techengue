@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './PublicarMascota.css';
 
 function PublicarMascota() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        // Obtener el userId del localStorage
+        const userId = localStorage.getItem('userId');
+        
+        // Imprimir el userId en la consola para verificar si existe o no
+        console.log('UserId en localStorage:', userId);
+    
+        // Verificar si el userId no existe
+        if (!userId) {
+          console.log('No hay userId, redirigiendo a login...');
+          navigate('/login');
+        }
+      }, [navigate]);
+
     const [formData, setFormData] = useState({
         nombre: '',
         tamano_aproximado: '',

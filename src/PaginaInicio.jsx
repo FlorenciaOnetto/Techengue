@@ -11,33 +11,26 @@ export default function PaginaInicio() {
     const [tamanoAproximado, setTamanoAproximado] = useState('');
     const [edadAproximada, setEdadAproximada] = useState('');
     const [edadUnidad, setEdadUnidad] = useState('');
+    const [filtroAplicado, setFiltroAplicado] = useState(false);
 
     useEffect(() => {
-        const fetchUserMascotas = async () => {
-            const token = localStorage.getItem('token');
-    
-            if (!token) return;
-    
+        const fetchMascotas = async () => {
             try {
-                const response = await fetch('http://localhost:3000/mascotas/todas', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+                const response = await fetch('http://localhost:3000/mascotas/todas');
     
                 if (response.ok) {
                     const data = await response.json();
                     setMascotas(data);
                 } else {
-                    console.error('Error al obtener las mascotas del usuario');
+                    console.error('Error al obtener las mascotas');
                 }
             } catch (error) {
                 console.error('Error en la conexión con el servidor:', error);
             }
         };
-        fetchUserMascotas();
+        fetchMascotas();
     }, []);
-    
+
     const handleVerDetalle = (id) => {
         navigate(`/perfilmascota/${id}`);
     };
@@ -47,12 +40,41 @@ export default function PaginaInicio() {
     };
 
     const handleSearch = () => {
-        if (especie && region && tamanoAproximado && edadAproximada && edadUnidad) {
-            const searchURL = `/resultados?especie=${especie}&region=${region}&tamano_aproximado=${tamanoAproximado}&edad_aproximada=${edadAproximada}&edad_unidad=${edadUnidad}`;
-            navigate(searchURL);
-        } else {
-            alert("Por favor, selecciona una opción en todos los campos de búsqueda.");
+        setFiltroAplicado(true);
+
+        let filteredMascotas = mascotas;
+
+        if (especie) {
+            filteredMascotas = filteredMascotas.filter(mascota => mascota.especie === especie);
         }
+
+        if (region) {
+            filteredMascotas = filteredMascotas.filter(mascota => mascota.region === region);
+        }
+
+        if (tamanoAproximado) {
+            filteredMascotas = filteredMascotas.filter(mascota => mascota.tamano_aproximado === tamanoAproximado);
+        }
+
+        if (edadAproximada) {
+            filteredMascotas = filteredMascotas.filter(mascota => mascota.edad_aproximada === edadAproximada);
+        }
+
+        if (edadUnidad) {
+            filteredMascotas = filteredMascotas.filter(mascota => mascota.edad_unidad === edadUnidad);
+        }
+
+        setMascotas(filteredMascotas);
+    };
+
+    const handleResetFilters = () => {
+        setEspecie('');
+        setRegion('');
+        setTamanoAproximado('');
+        setEdadAproximada('');
+        setEdadUnidad('');
+        setFiltroAplicado(false); 
+        window.location.reload();
     };
 
     return (
@@ -106,6 +128,10 @@ export default function PaginaInicio() {
                         <option value="años">Años</option>
                     </select>
                     <button className="search-btn" onClick={handleSearch}>→</button>
+                    {/* Mostrar el botón "Limpiar Filtros" solo si se ha aplicado un filtro */}
+                    {filtroAplicado && (
+                        <button className="reset-filters" onClick={handleResetFilters}>Limpiar Filtros</button>
+                    )}
                 </div>
             </section>
 
@@ -132,13 +158,13 @@ export default function PaginaInicio() {
                         ))}
                     </ul>
                 ) : (
-                    <p>No tienes mascotas publicadas.</p>
+                    <p>No hay mascotas que coincidan con tu búsqueda.</p>
                 )}
             </section>
 
             <footer className="footer">
                 <p>&copy; TailWaggers</p>
             </footer>
-        </div>
+        </div> 
     );
 }

@@ -39,30 +39,39 @@
   cursor: pointer;
 }
 
+/* Contenedor de las tarjetas */
+.mascotas-list {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas se muevan a la siguiente fila cuando no hay espacio */
+  justify-content: space-around; /* Espacio entre las tarjetas */
+  gap: 15px; /* Espacio entre las tarjetas */
+}
+
+/* Tarjetas de mascota */
 .mascota-card {
-  width: 250px;
+  width: 200px; /* Ajustar el ancho de las tarjetas */
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
   background-color: #fff;
-  margin: 20px;
+  margin: 0; /* El margen ya se controla con gap */
 }
 
 .mascota-image {
   width: 100%;
-  height: 180px;
+  height: 150px;
   object-fit: cover;
   border-radius: 8px;
 }
 
 .mascota-details {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .detail-button {
-  margin-top: 10px;
-  padding: 8px 16px;
+  margin-top: 8px;
+  padding: 6px 12px;
   background-color: #e53e3e;
   color: white;
   border: none;

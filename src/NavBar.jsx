@@ -30,6 +30,7 @@ function NavBar() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('nombre');
+        localStorage.removeItem('userId');
         navigate('/login');
         window.location.reload();
     };
@@ -42,10 +43,8 @@ function NavBar() {
             </div>
             <ul className="navbar-links">
                 <li><Link to="/inicio">Inicio</Link></li>
-                <li><Link to="/profile">Pet Profile</Link></li>
-                <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><Link to="#featured">Featured</Link></li>
-                <li><Link to="/perfilusuario">Perfil de Usuario</Link></li>
+                {/* Mostrar "Perfil de Usuario" solo si hay un nombre guardado */}
+                {nombre && <li><Link to="/perfilusuario">Perfil de Usuario</Link></li>}
                 {nombre && (
                   <Link to="/publicar-mascota" className="btn-publish">Publicar Mascota</Link>
                 )}

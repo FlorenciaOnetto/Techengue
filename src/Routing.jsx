@@ -13,8 +13,11 @@ import ResenaForm from "./Resena";
 import PerfilMascota from "./PerfilMascota"; 
 import PublicarMascota from './PublicarMascota';
 import ResultadosBusqueda from "./ResultadosBusqueda";
+import PrivateRoute from './PrivateRoute';  
+
 
 export default function Routing() {
+
     return (
         <BrowserRouter>
             <NavBar />
@@ -22,7 +25,10 @@ export default function Routing() {
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
                 <Route path={'/'} element={<App />} />
-                <Route path={'/SolicitudAdopcion/:idMascota'} element={<AdoptionRequestForm />} />
+                <Route
+                    path="/SolicitudAdopcion/:idMascota"
+                    element={<PrivateRoute element={AdoptionRequestForm} />}
+                    />
                 <Route path={'/Solicitudes'} element={<PetAdoptionRequests />} />
                 <Route path={'/login'} element={<Login />} />
                 <Route path={'/registro'} element={<Registro />} />
