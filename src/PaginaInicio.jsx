@@ -85,6 +85,34 @@ export default function PaginaInicio() {
                 </div>
             </section>
 
+            <h2 className="resultados-titulo">Mascotas Disponibles para Adopción</h2>
+            <section style={styles.mascotasSection}>
+                {mascotas.map(mascota => (
+                    <div key={mascota.id_mascota} className="mascota-card">
+                        <div className="mascota-info">
+                            <h3>{mascota.nombre}</h3>
+                            <p><strong>Especie:</strong> {mascota.especie}</p>
+                            <p><strong>Región:</strong> {mascota.region}</p>
+                            <p><strong>Tamaño Aproximado:</strong> {mascota.tamano_aproximado}</p>
+                            <p><strong>Edad Aproximada:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
+                        </div>
+                        {mascota.fotos && (
+                            <img 
+                                src={`http://localhost:3000/uploads/${mascota.fotos}`} 
+                                alt={mascota.nombre} 
+                                className="mascota-foto" 
+                            />
+                        )}
+                        <button 
+                            onClick={() => handleViewDetails(mascota.id_mascota)} 
+                            className="detalles-button"
+                        >
+                            Ver detalles
+                        </button>
+                    </div>
+                ))}
+            </section>
+
             <footer className="footer">
                 <p>&copy; TailWaggers</p>
             </footer>
@@ -128,4 +156,12 @@ const styles = {
         height: 'auto',
         objectFit: 'cover',
     },
+    mascotasSection: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        padding: '20px',
+        flexGrow: 1,
+    }
 };
+
