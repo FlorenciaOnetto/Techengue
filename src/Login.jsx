@@ -22,7 +22,8 @@ function Login() {
             
             // Guarda el token y el nombre en localStorage
             localStorage.setItem('token', data.token);
-            localStorage.setItem('nombre', data.nombre); // Guarda el nombre del usuario
+            localStorage.setItem('nombre', data.nombre);
+            localStorage.setItem('userId', data.id); 
 
             alert('Inicio de sesión exitoso');
             navigate('/inicio');
