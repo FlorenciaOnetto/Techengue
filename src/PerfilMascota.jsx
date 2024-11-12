@@ -1,4 +1,3 @@
-// PerfilMascota.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './PerfilMascota.css';
@@ -7,7 +6,7 @@ export default function PerfilMascota() {
     const { idMascota } = useParams();
     const [mascota, setMascota] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-    const [isOwner, setIsOwner] = useState(false); // Estado para verificar si es el dueño
+    const [isOwner, setIsOwner] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,11 +16,10 @@ export default function PerfilMascota() {
                 const data = await response.json();
                 setMascota(data);
 
-                // Verificar si el usuario es el dueño de la mascota
                 const token = localStorage.getItem('token');
                 if (token) {
-                    const userData = JSON.parse(atob(token.split('.')[1])); // Decodificar el token JWT
-                    if (data.id_usuario === userData.id) { // Verificar si el ID del usuario coincide
+                    const userData = JSON.parse(atob(token.split('.')[1]));
+                    if (data.id_usuario === userData.id) {
                         setIsOwner(true);
                     }
                 }
@@ -57,7 +55,7 @@ export default function PerfilMascota() {
                 setMascota(updatedMascota);
                 setIsEditing(false);
                 alert("Cambios guardados exitosamente.");
-                navigate('/perfilusuario'); // Redirigir al perfil de usuario
+                navigate('/perfilusuario');
             } else {
                 console.error("Error al actualizar la mascota.");
             }
@@ -74,7 +72,19 @@ export default function PerfilMascota() {
         });
     };
 
+    const handleVerSolicitudes = () => {
+        navigate(`/Solicitudes/${mascota.id_mascota}`);
+    };
+
+    const handleRealizarSolicitud = () => {
+        navigate(`/SolicitudAdopcion/${mascota.id_mascota}`);
+    };
+
     if (!mascota) return <p>Cargando...</p>;
+
+    const handleSolicitudClick = () => {
+        navigate(`/SolicitudAdopcion/${idMascota}`);
+    };
 
     return (
         <div className="pet-profile">
@@ -82,6 +92,7 @@ export default function PerfilMascota() {
                 <img src={`http://localhost:3000/uploads/${mascota.fotos}`} alt={mascota.nombre} className="pet-image" />
                 <div className="pet-details">
                     <h2>{mascota.nombre}</h2>
+
                     {isEditing ? (
                         <>
                             <p>
@@ -176,7 +187,7 @@ export default function PerfilMascota() {
                                     onChange={handleInputChange}
                                 />
                             </p>
-                            <button className="edit-button" onClick={handleConfirmChanges}>Confirmar cambios</button>
+                            <button className="button confirm-button" onClick={handleConfirmChanges}>Confirmar cambios</button>
                         </>
                     ) : (
                         <>
@@ -189,9 +200,15 @@ export default function PerfilMascota() {
                             <p><strong>Especie:</strong> {mascota.especie}</p>
                             <p><strong>Región:</strong> {mascota.region}</p>
                             <div className="button-container">
-                                <button className="contact-button">Contactar Guardian</button>
-                                <button className="adoption-button">Solicitudes</button>
-                                {isOwner && <button className="edit-button" onClick={handleEdit}>Editar</button>} {/* Mostrar botón de editar solo si el usuario es el dueño */}
+                                {isOwner ? (
+                                    <>
+                                        <button className="button solicitudes-button" onClick={handleVerSolicitudes}>Ver Solicitudes</button>
+                                        <button className="button edit-button" onClick={handleEdit}>Editar Perfil</button>
+                                    </>
+                                ) : (
+                                    <button className="button solicitud-button" onClick={handleRealizarSolicitud}>Realizar Solicitud</button>
+                                )}
+                                <button className="button volver-button" onClick={() => navigate(-1)}>Volver</button>
                             </div>
                         </>
                     )}
@@ -200,3 +217,4 @@ export default function PerfilMascota() {
         </div>
     );
 }
+
