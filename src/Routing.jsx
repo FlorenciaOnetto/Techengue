@@ -24,11 +24,7 @@ export default function Routing() {
             <Routes>
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
-                <Route path={'/'} element={<App />} />
-                <Route
-                    path="/SolicitudAdopcion/:idMascota"
-                    element={<PrivateRoute element={AdoptionRequestForm} />}
-                    />
+                <Route path={'/SolicitudAdopcion/:idMascota'} element={<AdoptionRequestForm />}/>
                 <Route path={'/Solicitudes'} element={<PetAdoptionRequests />} />
                 <Route path={'/login'} element={<Login />} />
                 <Route path={'/registro'} element={<Registro />} />
@@ -37,7 +33,8 @@ export default function Routing() {
                 <Route path={'/resena'} element={<ResenaForm />} /> 
                 <Route path={'/perfilmascota/:idMascota'} element={<PerfilMascota />} /> 
                 <Route path={"/publicar-mascota"} element={<PublicarMascota />} />
-                <Route path={'/resultados'} element={<ResultadosBusqueda />} /> {/* Nueva ruta */}
+                <Route path={'/resultados'} element={<ResultadosBusqueda />} />
+                <Route path={'/'} element={<App />} /> {/* Coloca la ruta raíz al final */}
             </Routes>
         </BrowserRouter>
     );

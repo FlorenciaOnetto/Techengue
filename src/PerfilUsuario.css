@@ -179,7 +179,7 @@
 
 .delete-account-button {
     padding: 12px; 
-    background-color: #ff4d4d; 
+    background-color: #e65a5a; 
     color: white;
     border: none;
     border-radius: 20px; 
@@ -191,11 +191,11 @@
 }
 
 .delete-account-button:hover {
-    background-color: #e65a5a; 
+    background-color: grey; 
 }
 
 .edit-button {
-    background-color: #4CAF50; /* Verde */
+    background-color: #e65a5a; 
     color: white;
     padding: 5px 10px;
     border: none;
@@ -207,7 +207,7 @@
 }
 
 .edit-button:hover {
-    background-color: #45a049; /* Color de hover */
+    background-color: grey; /* Color de hover */
 }
 
 
