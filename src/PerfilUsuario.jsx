@@ -212,7 +212,7 @@ export default function PerfilUsuario() {
                                                 className="edit-button" 
                                                 onClick={() => handleEditMascota(mascota.id_mascota)}
                                             >
-                                                Editar
+                                                Ver
                                             </button>
                                             <button 
                                                 className="delete-button" 

@@ -6,32 +6,31 @@ const AdoptionRequestForm = () => {
   const { idMascota } = useParams();
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
-    // Obtener el userId del localStorage
-    const userId = localStorage.getItem('userId');
-    
-    // Imprimir el userId en la consola para verificar si existe o no
-    console.log('UserId en localStorage:', userId);
-
-    // Verificar si el userId no existe
-    if (!userId) {
-      console.log('No hay userId, redirigiendo a login...');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No hay token, redirigiendo a login...');
       navigate('/login');
+    } else {
+      try {
+        const userData = JSON.parse(atob(token.split('.')[1]));
+        setUserId(userData.id_usuario);
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        navigate('/login');
+      }
     }
   }, [navigate]);
 
-
-  // Estado para cada campo del formulario
   const [tipoVivienda, setTipoVivienda] = useState([]);
   const [otrosAnimales, setOtrosAnimales] = useState(null);
-  const [experienciaPrevia, setExperienciaPrevia] = useState(null);
+  const [experiencia, setExperiencia] = useState(null);
   const [descripcionExperiencia, setDescripcionExperiencia] = useState('');
-  const [motivos, setMotivos] = useState('');
+  const [razones, setRazones] = useState('');
   const [contacto, setContacto] = useState('');
   const [aceptacionTerminos, setAceptacionTerminos] = useState(false);
-
-  // Estado para los mensajes de error
   const [errors, setErrors] = useState({});
 
   const handleCheckboxChange = (value, setter, currentValues) => {
@@ -44,68 +43,60 @@ const AdoptionRequestForm = () => {
 
   const validateForm = () => {
     let formErrors = {};
-
-    if (tipoVivienda.length === 0) {
-      formErrors.tipoVivienda = 'Este campo es obligatorio';
-    }
-
-    if (otrosAnimales === null) {
-      formErrors.otrosAnimales = 'Este campo es obligatorio';
-    }
-
-    if (experienciaPrevia === null) {
-      formErrors.experienciaPrevia = 'Este campo es obligatorio';
-    }
-
-    if (!motivos) {
-      formErrors.motivos = 'Este campo es obligatorio';
-    }
-
-    if (!aceptacionTerminos) {
-      formErrors.aceptacionTerminos = 'Debes aceptar los términos para continuar';
-    }
-
+    if (tipoVivienda.length === 0) formErrors.tipoVivienda = 'Este campo es obligatorio';
+    if (otrosAnimales === null) formErrors.otrosAnimales = 'Este campo es obligatorio';
+    if (experiencia === null) formErrors.experiencia = 'Este campo es obligatorio';
+    if (!razones) formErrors.razones = 'Este campo es obligatorio';
+    if (!contacto) formErrors.contacto = 'Este campo es obligatorio';
+    if (!aceptacionTerminos) formErrors.aceptacionTerminos = 'Debes aceptar los términos para continuar';
     setErrors(formErrors);
+    console.log("Errores del formulario:", formErrors);
     return Object.keys(formErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('handleSubmit se ha llamado');
+    setSubmitError(''); // Reiniciar el mensaje de error
     const token = localStorage.getItem('token');
-    
-    if (validateForm()) {
+
+    if (validateForm() && token && userId) {
       const data = {
-        id_mascota: idMascota, 
-        id_potencial_adoptante: userId,  
-        estado: 'pendiente',  
-        razones: motivos,  
-        descripcion_hogar: tipoVivienda.toString(),  
-        experiencia: experienciaPrevia === 'Sí',  
-        contacto: contacto, 
-        created: new Date()
-      };
+        id_mascota: idMascota,
+        estado: 'pendiente',
+        tipo_vivienda: tipoVivienda.toString(),
+        otra_mascota: otrosAnimales === 'Sí',
+        experiencia: experiencia === 'Sí',
+        descripcion_experiencia: descripcionExperiencia,
+        razones: razones,
+        contacto: contacto,
+    };
 
       try {
+        console.log("Datos a enviar:", data);
         const response = await fetch('http://localhost:3000/solicitudes/crear', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+          },
+          body: JSON.stringify(data)
         });
-      
+
         if (response.ok) {
           console.log('Solicitud enviada con éxito');
-          navigate('/'); // Redirige a la página de inicio solo si la solicitud es exitosa
+          navigate(-1); // Redirige a la página de inicio solo si la solicitud es exitosa
         } else {
-          const errorMessage = await response.text(); // Obtener el cuerpo del mensaje de error
-          console.error('Error al enviar la solicitud:', errorMessage);
+          const errorData = await response.json();
+          setSubmitError(errorData.error || 'Error al enviar la solicitud');
+          console.error('Error al enviar la solicitud:', errorData);
         }
       } catch (error) {
-        // Aquí 'error' es la variable que captura cualquier excepción lanzada durante el bloque try
-        console.error('Error en la conexión:', error);  // 'error' es un objeto Error que contiene detalles sobre la excepción
-      }      
+        setSubmitError('Error en la conexión con el servidor');
+        console.error('Error en la conexión:', error);
+      }
+    } else {
+      console.log("Formulario no válido o falta de token/userId");
     }
   };
 
@@ -114,7 +105,6 @@ const AdoptionRequestForm = () => {
       <form onSubmit={handleSubmit} className="adoption-form-container">
         <h2>Solicitud de Adopción</h2>
 
-        {/* Tipo de Vivienda */}
         <div>
           <label className="section-title">Seleccione su tipo de vivienda:</label>
           <div>
@@ -161,7 +151,7 @@ const AdoptionRequestForm = () => {
           {errors.tipoVivienda && <p className="error-message">{errors.tipoVivienda}</p>}
         </div>
         <br />
-        {/* Otros Animales */}
+
         <div>
           <label className="section-title">¿Tienes otros animales en el hogar?</label>
           <div>
@@ -190,82 +180,80 @@ const AdoptionRequestForm = () => {
           {errors.otrosAnimales && <p className="error-message">{errors.otrosAnimales}</p>}
         </div>
         <br />
-      {/* Experiencia con Mascotas */}
-      <div>
-        <label className="section-title">¿Has tenido mascotas antes?</label>
+
         <div>
-          <label>
-            <input
-              type="radio"
-              name="experienciaPrevia"
-              value="Sí"
-              checked={experienciaPrevia === 'Sí'}
-              onChange={() => setExperienciaPrevia('Sí')}
-            />
-            Sí
-          </label>
+          <label className="section-title">¿Has tenido mascotas antes?</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="experiencia"
+                value="Sí"
+                checked={experiencia === 'Sí'}
+                onChange={() => setExperiencia('Sí')}
+              />
+              Sí
+            </label>
+            <br />
+            <label>
+              <input
+                type="radio"
+                name="experiencia"
+                value="No"
+                checked={experiencia === 'No'}
+                onChange={() => setExperiencia('No')}
+              />
+              No
+            </label>
+          </div>
+          {errors.experiencia && <p className="error-message">{errors.experiencia}</p>}
           <br />
-          <label>
-            <input
-              type="radio"
-              name="experienciaPrevia"
-              value="No"
-              checked={experienciaPrevia === 'No'}
-              onChange={() => setExperienciaPrevia('No')}
-            />
-            No
-          </label>
+          <label className="section-title">Descripción de tu experiencia (opcional)</label>
+          <textarea
+            value={descripcionExperiencia}
+            onChange={(e) => setDescripcionExperiencia(e.target.value)}
+            placeholder="Describe tu experiencia con mascotas"
+          ></textarea>
         </div>
-        {errors.experienciaPrevia && <p className="error-message">{errors.experienciaPrevia}</p>}
+
+        <div>
+          <label className="section-title">Razones para adoptar</label>
+          <textarea
+            value={razones}
+            onChange={(e) => setRazones(e.target.value)}
+            placeholder="Explica tus motivos para adoptar"
+          ></textarea>
+          {errors.razones && <p className="error-message">{errors.razones}</p>}
+        </div>
+
+        <div>
+          <label className="section-title">Información de Contacto</label>
+          <input
+            type="text"
+            value={contacto}
+            onChange={(e) => setContacto(e.target.value)}
+            placeholder="Ingresa tu número de teléfono o correo"
+          />
+          {errors.contacto && <p className="error-message">{errors.contacto}</p>}
+        </div>
+
+        <div>
+          <input
+            type="checkbox"
+            checked={aceptacionTerminos}
+            onChange={(e) => setAceptacionTerminos(e.target.checked)}
+          />
+          <label>Acepto los términos y condiciones de adopción</label>
+          {errors.aceptacionTerminos && <p className="error-message">{errors.aceptacionTerminos}</p>}
+        </div>
         <br />
-        <label className="section-title">Descripción de tu experiencia (opcional)</label>
-        <textarea
-          value={descripcionExperiencia}
-          onChange={(e) => setDescripcionExperiencia(e.target.value)}
-          placeholder="Describe tu experiencia con mascotas"
-        ></textarea>
-      </div>
 
-      {/* Motivos para Adoptar */}
-      <div>
-        <label className="section-title">Motivos para adoptar</label>
-        <textarea
-          value={motivos}
-          onChange={(e) => setMotivos(e.target.value)}
-          placeholder="Explica tus motivos para adoptar"
-        ></textarea>
-        {errors.motivos && <p className="error-message">{errors.motivos}</p>}
-      </div>
+        {submitError && <p className="error-message">{submitError}</p>}
 
-      {/* Campo de Contacto */}
-      <div>
-        <label className="section-title">Información de Contacto</label>
-        <input
-          type="text"
-          value={contacto}
-          onChange={(e) => setContacto(e.target.value)}
-          placeholder="Ingresa tu número de teléfono o correo"
-        />
-        {errors.contacto && <p className="error-message">{errors.contacto}</p>}
-      </div>
-
-      {/* Aceptación de Términos */}
-      <div>
-        <input
-          type="checkbox"
-          checked={aceptacionTerminos}
-          onChange={(e) => setAceptacionTerminos(e.target.checked)}
-        />
-        <label>Acepto los términos y condiciones de adopción</label>
-        {errors.aceptacionTerminos && <p className="error-message">{errors.aceptacionTerminos}</p>}
-      </div>
-<br />
-      {/* Botón de Enviar */}
-      <button type="submit">Enviar Solicitud</button>
+        <button type="submit">Enviar Solicitud</button>
       </form>
     </div>
   );
 };
 
 export default AdoptionRequestForm;
-
