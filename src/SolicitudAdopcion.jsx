@@ -16,7 +16,7 @@ const AdoptionRequestForm = () => {
     } else {
       try {
         const userData = JSON.parse(atob(token.split('.')[1]));
-        setUserId(userData.id);
+        setUserId(userData.id_usuario);
       } catch (error) {
         console.error('Error al decodificar el token:', error);
         navigate('/login');
@@ -26,9 +26,9 @@ const AdoptionRequestForm = () => {
 
   const [tipoVivienda, setTipoVivienda] = useState([]);
   const [otrosAnimales, setOtrosAnimales] = useState(null);
-  const [experienciaPrevia, setExperienciaPrevia] = useState(null);
+  const [experiencia, setExperiencia] = useState(null);
   const [descripcionExperiencia, setDescripcionExperiencia] = useState('');
-  const [motivos, setMotivos] = useState('');
+  const [razones, setRazones] = useState('');
   const [contacto, setContacto] = useState('');
   const [aceptacionTerminos, setAceptacionTerminos] = useState(false);
   const [errors, setErrors] = useState({});
@@ -45,11 +45,12 @@ const AdoptionRequestForm = () => {
     let formErrors = {};
     if (tipoVivienda.length === 0) formErrors.tipoVivienda = 'Este campo es obligatorio';
     if (otrosAnimales === null) formErrors.otrosAnimales = 'Este campo es obligatorio';
-    if (experienciaPrevia === null) formErrors.experienciaPrevia = 'Este campo es obligatorio';
-    if (!motivos) formErrors.motivos = 'Este campo es obligatorio';
+    if (experiencia === null) formErrors.experiencia = 'Este campo es obligatorio';
+    if (!razones) formErrors.razones = 'Este campo es obligatorio';
     if (!contacto) formErrors.contacto = 'Este campo es obligatorio';
     if (!aceptacionTerminos) formErrors.aceptacionTerminos = 'Debes aceptar los términos para continuar';
     setErrors(formErrors);
+    console.log("Errores del formulario:", formErrors);
     return Object.keys(formErrors).length === 0;
   };
 
@@ -63,12 +64,13 @@ const AdoptionRequestForm = () => {
       const data = {
         id_mascota: idMascota,
         estado: 'pendiente',
-        razones: motivos,
-        descripcion_hogar: tipoVivienda.toString(),
-        experiencia: experienciaPrevia === 'Sí',
+        tipo_vivienda: tipoVivienda.toString(),
+        otra_mascota: otrosAnimales === 'Sí',
+        experiencia: experiencia === 'Sí',
+        descripcion_experiencia: descripcionExperiencia,
+        razones: razones,
         contacto: contacto,
-        created: new Date()
-      };
+    };
 
       try {
         console.log("Datos a enviar:", data);
@@ -83,7 +85,7 @@ const AdoptionRequestForm = () => {
 
         if (response.ok) {
           console.log('Solicitud enviada con éxito');
-          navigate('/'); // Redirige a la página de inicio solo si la solicitud es exitosa
+          navigate(-1); // Redirige a la página de inicio solo si la solicitud es exitosa
         } else {
           const errorData = await response.json();
           setSubmitError(errorData.error || 'Error al enviar la solicitud');
@@ -185,10 +187,10 @@ const AdoptionRequestForm = () => {
             <label>
               <input
                 type="radio"
-                name="experienciaPrevia"
+                name="experiencia"
                 value="Sí"
-                checked={experienciaPrevia === 'Sí'}
-                onChange={() => setExperienciaPrevia('Sí')}
+                checked={experiencia === 'Sí'}
+                onChange={() => setExperiencia('Sí')}
               />
               Sí
             </label>
@@ -196,15 +198,15 @@ const AdoptionRequestForm = () => {
             <label>
               <input
                 type="radio"
-                name="experienciaPrevia"
+                name="experiencia"
                 value="No"
-                checked={experienciaPrevia === 'No'}
-                onChange={() => setExperienciaPrevia('No')}
+                checked={experiencia === 'No'}
+                onChange={() => setExperiencia('No')}
               />
               No
             </label>
           </div>
-          {errors.experienciaPrevia && <p className="error-message">{errors.experienciaPrevia}</p>}
+          {errors.experiencia && <p className="error-message">{errors.experiencia}</p>}
           <br />
           <label className="section-title">Descripción de tu experiencia (opcional)</label>
           <textarea
@@ -215,13 +217,13 @@ const AdoptionRequestForm = () => {
         </div>
 
         <div>
-          <label className="section-title">Motivos para adoptar</label>
+          <label className="section-title">Razones para adoptar</label>
           <textarea
-            value={motivos}
-            onChange={(e) => setMotivos(e.target.value)}
+            value={razones}
+            onChange={(e) => setRazones(e.target.value)}
             placeholder="Explica tus motivos para adoptar"
           ></textarea>
-          {errors.motivos && <p className="error-message">{errors.motivos}</p>}
+          {errors.razones && <p className="error-message">{errors.razones}</p>}
         </div>
 
         <div>
@@ -245,6 +247,8 @@ const AdoptionRequestForm = () => {
           {errors.aceptacionTerminos && <p className="error-message">{errors.aceptacionTerminos}</p>}
         </div>
         <br />
+
+        {submitError && <p className="error-message">{submitError}</p>}
 
         <button type="submit">Enviar Solicitud</button>
       </form>

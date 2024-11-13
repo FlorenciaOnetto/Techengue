@@ -20,7 +20,7 @@ export default function PerfilMascota() {
                 const token = localStorage.getItem('token');
                 if (token) {
                     const userData = JSON.parse(atob(token.split('.')[1]));
-                    if (data.id_usuario === userData.id) {
+                    if (data.id_usuario === userData.id_usuario) {
                         setIsOwner(true);
                     }
                 }
@@ -72,25 +72,7 @@ export default function PerfilMascota() {
                 </div>
             </div>
 
-            {showSolicitudes && (
-                <div className="solicitudes-container">
-                    <h3>Solicitudes de Adopción</h3>
-                    {solicitudes.length > 0 ? (
-                        <ul>
-                            {solicitudes.map((solicitud) => (
-                                <li key={solicitud.id_solicitud}>
-                                    <p><strong>Motivo:</strong> {solicitud.razones}</p>
-                                    <p><strong>Descripción del Hogar:</strong> {solicitud.descripcion_hogar}</p>
-                                    <p><strong>Estado:</strong> {solicitud.estado}</p>
-                                    <p><strong>Contacto:</strong> {solicitud.contacto}</p>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No hay solicitudes para esta mascota.</p>
-                    )}
-                </div>
-            )}
+            
         </div>
     );
 }
