@@ -7,20 +7,22 @@ export default function PerfilMascota() {
     const [mascota, setMascota] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
+    const [solicitudes, setSolicitudes] = useState([]);
+    const [showSolicitudes, setShowSolicitudes] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("Ejecutando useEffect");
         const fetchMascota = async () => { 
             try {
                 const response = await fetch(`http://localhost:3000/mascotas/${idMascota}`);
+                if (!response.ok) throw new Error('Error al cargar la mascota');
+                
                 const data = await response.json();
                 setMascota(data);
-                console.log(data); 
+
                 const token = localStorage.getItem('token');
                 if (token) {
                     const userData = JSON.parse(atob(token.split('.')[1]));
-                    console.log(userData); 
                     if (data.id_usuario === userData.id_usuario) {
                         setIsOwner(true);
                     } 
@@ -60,9 +62,11 @@ export default function PerfilMascota() {
                 navigate('/perfilusuario');
             } else {
                 console.error("Error al actualizar la mascota.");
+                alert("No se pudo actualizar la mascota.");
             }
         } catch (error) {
             console.error("Error en la conexión con el servidor:", error);
+            alert("Hubo un problema con la conexión.");
         }
     };
 
@@ -74,31 +78,82 @@ export default function PerfilMascota() {
         });
     };
 
-    const handleVerSolicitudes = () => {
-        navigate(`/Solicitudes/${mascota.id_mascota}`);
-    };
-
-    const handleRealizarSolicitud = () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert("Debes iniciar sesión primero.");
-        } else {
-            navigate(`/SolicitudAdopcion/${mascota.id_mascota}`);
-        }
-    };
-
-    if (!mascota) return <p>Cargando...</p>;
-
     const handleViewSolicitudes = async () => {
         try {
             const response = await fetch(`http://localhost:3000/solicitudes/mascota/${idMascota}`);
+            if (!response.ok) throw new Error('Error al obtener solicitudes');
+
             const data = await response.json();
-            setSolicitudes(data);
-            setShowSolicitudes(true); // Mostrar las solicitudes
+            setSolicitudes(Array.isArray(data) ? data : []);
+            setShowSolicitudes(true);
         } catch (error) {
             console.error("Error al obtener solicitudes:", error);
+            alert("Hubo un problema al cargar las solicitudes.");
         }
-    };    
+    };
+
+    const handleSolicitudDecision = async (solicitudId, decision) => {
+        try {
+            const response = await fetch(`http://localhost:3000/solicitudes/${solicitudId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ estado: decision })
+            });
+    
+            if (response.ok) {
+                const updatedSolicitud = await response.json();
+    
+                if (decision === 'aceptada') {
+                    // Si se acepta una solicitud, actualizar para que las demás se deshabiliten
+                    setSolicitudes(prevSolicitudes =>
+                        prevSolicitudes.map(s =>
+                            s.id_solicitud === solicitudId
+                                ? { ...s, estado: 'aceptada' }
+                                : { ...s, estado: s.estado === 'pendiente' ? 'rechazada' : s.estado }
+                        )
+                    );
+                } else if (decision === 'rechazada') {
+                    // Si se rechaza una solicitud aceptada, verificar si quedan solicitudes aceptadas
+                    setSolicitudes(prevSolicitudes => {
+                        const updatedSolicitudes = prevSolicitudes.map(s =>
+                            s.id_solicitud === solicitudId ? { ...s, estado: 'rechazada' } : s
+                        );
+    
+                        // Verificar si hay alguna solicitud aceptada
+                        const hasAccepted = updatedSolicitudes.some(s => s.estado === 'aceptada');
+                        
+                        // Si no hay ninguna aceptada, volver a habilitar todas las pendientes
+                        if (!hasAccepted) {
+                            return updatedSolicitudes.map(s =>
+                                s.estado === 'rechazada' ? { ...s, estado: 'pendiente' } : s
+                            );
+                        }
+                        
+                        return updatedSolicitudes;
+                    });
+                } else {
+                    // Para otras actualizaciones, simplemente actualizamos el estado normalmente
+                    setSolicitudes(prevSolicitudes =>
+                        prevSolicitudes.map(s =>
+                            s.id_solicitud === solicitudId ? { ...s, estado: decision } : s
+                        )
+                    );
+                }
+            } else {
+                console.error("Error al actualizar la solicitud");
+                alert("No se pudo actualizar la solicitud.");
+            }
+        } catch (error) {
+            console.error("Error en la conexión con el servidor:", error);
+            alert("Hubo un problema con la conexión.");
+        }
+    };
+    
+    
+
+    if (!mascota) return <p>Cargando...</p>;
 
     return (
         <div className="pet-profile">
@@ -109,98 +164,6 @@ export default function PerfilMascota() {
 
                     {isEditing ? (
                         <>
-                            <p>
-                                <strong>Nombre:</strong>
-                                <input
-                                    type="text"
-                                    name="nombre"
-                                    value={mascota.nombre}
-                                    onChange={handleInputChange}
-                                />
-                            </p>
-                            <p>
-                                <strong>Edad:</strong>
-                                <input
-                                    type="number"
-                                    name="edad_aproximada"
-                                    value={mascota.edad_aproximada}
-                                    onChange={handleInputChange}
-                                />
-                                <select
-                                    name="edad_unidad"
-                                    value={mascota.edad_unidad}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="meses">Meses</option>
-                                    <option value="años">Años</option>
-                                </select>
-                            </p>
-                            <p>
-                                <strong>Porte:</strong>
-                                <input
-                                    type="text"
-                                    name="tamano_aproximado"
-                                    value={mascota.tamano_aproximado}
-                                    onChange={handleInputChange}
-                                />
-                            </p>
-                            <p>
-                                <strong>Raza:</strong>
-                                <input
-                                    type="text"
-                                    name="raza"
-                                    value={mascota.raza}
-                                    onChange={handleInputChange}
-                                />
-                            </p>
-                            <p>
-                                <strong>Comportamiento:</strong>
-                                <textarea
-                                    name="comportamiento"
-                                    value={mascota.comportamiento}
-                                    onChange={handleInputChange}
-                                />
-                            </p>
-                            <p>
-                                <strong>Salud:</strong>
-                                <select
-                                    name="salud"
-                                    value={mascota.salud ? 'true' : 'false'}
-                                    onChange={(e) => handleInputChange({ target: { name: 'salud', value: e.target.value === 'true' } })}
-                                >
-                                    <option value="true">Con problemas de salud</option>
-                                    <option value="false">No tiene problemas de salud</option>
-                                </select>
-                            </p>
-                            {mascota.salud && (
-                                <p>
-                                    <strong>Detalles de Salud:</strong>
-                                    <input
-                                        type="text"
-                                        name="detallesSalud"
-                                        value={mascota.detallesSalud || ''}
-                                        onChange={handleInputChange}
-                                    />
-                                </p>
-                            )}
-                            <p>
-                                <strong>Especie:</strong>
-                                <input
-                                    type="text"
-                                    name="especie"
-                                    value={mascota.especie}
-                                    onChange={handleInputChange}
-                                />
-                            </p>
-                            <p>
-                                <strong>Región:</strong>
-                                <input
-                                    type="text"
-                                    name="region"
-                                    value={mascota.region}
-                                    onChange={handleInputChange}
-                                />
-                            </p>
                             <button className="button confirm-button" onClick={handleConfirmChanges}>Confirmar cambios</button>
                         </>
                     ) : (
@@ -225,6 +188,51 @@ export default function PerfilMascota() {
                                 <button className="back-button" onClick={() => navigate(-1)}>Volver</button>
                             </div>
                         </>
+                    )}
+
+                    {showSolicitudes && (
+                        <div className="solicitudes-section">
+                            <h3>Solicitudes de adopción</h3>
+                            <div className="solicitudes-container">
+                                {solicitudes.map(solicitud => (
+                                    <div key={solicitud.id_solicitud} className="solicitud-card">
+                                        <div className="user-info">
+                                            <div className="user-details">
+                                                <p className="user-name"><strong>{solicitud.potencial_adoptante.nombre}</strong></p>
+                                                <p className="user-name"><strong>{solicitud.potencial_adoptante.email}</strong></p>
+                                                <p className="user-contact"><strong>Contacto:</strong> {solicitud.contacto}</p>
+                                            </div>
+                                        </div>
+                                        <div className="solicitud-details">
+                                            <p><strong>Razones:</strong> {solicitud.razones}</p>
+                                            <p><strong>Tipo de Vivienda:</strong> {solicitud.tipo_vivienda}</p>
+                                            <p><strong>Otra Mascota:</strong> {solicitud.otra_mascota ? 'Sí' : 'No'}</p>
+                                            <p><strong>Experiencia con Mascotas:</strong> {solicitud.experiencia ? 'Sí' : 'No'}</p>
+                                            <p><strong>Descripción de la Experiencia:</strong> {solicitud.descripcion_experiencia}</p>
+                                            <p><strong>Estado:</strong> {solicitud.estado}</p>
+                                        </div>
+                                        <div className="solicitud-actions">
+                                            <button
+                                                onClick={() => handleSolicitudDecision(solicitud.id_solicitud, 'aceptada')}
+                                                className="accept-button"
+                                                disabled={solicitud.estado !== 'pendiente' && solicitud.estado !== 'aceptada'}
+                                            >
+                                                Aceptar
+                                            </button>
+                                            <button
+                                                onClick={() => handleSolicitudDecision(solicitud.id_solicitud, 'rechazada')}
+                                                className="reject-button"
+                                                disabled={solicitud.estado !== 'aceptada' && solicitud.estado !== 'pendiente'}
+                                            >
+                                                Rechazar
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>
