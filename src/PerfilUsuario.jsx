@@ -154,7 +154,7 @@ export default function PerfilUsuario() {
                 <a href={`mailto:${email}`} className="profile-email">{email || 'Email no disponible'}</a>
                 <div className="sidebar-buttons">
                     <button className="sidebar-button">Historial adopciones</button>
-                    <button className="sidebar-button" onClick={() => navigate('/settings')}>Settings</button>
+                    <button className="sidebar-button" onClick={() => navigate('/SolicitudEstado')}>Ver mis solicitudes</button>
                 </div>
                 <button className="delete-account-button" onClick={handleDeleteAccount}>
                     Eliminar cuenta
