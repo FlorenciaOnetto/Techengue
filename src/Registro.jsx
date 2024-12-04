@@ -37,6 +37,7 @@ function Registro() {
             <label>Nombre</label>
             <input
               type="text"
+              name="username"  // Agregar el atributo name
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Ingresa tu nombre"
@@ -47,6 +48,7 @@ function Registro() {
             <label>Email</label>
             <input
               type="email"
+              name="email"  // Agregar el atributo name
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Ingresa tu email"
@@ -57,6 +59,7 @@ function Registro() {
             <label>Contraseña</label>
             <input
               type="password"
+              name="password"  // Agregar el atributo name
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
