@@ -16,7 +16,7 @@ export default function PaginaInicio() {
     useEffect(() => {
         const fetchMascotas = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/mascotas/todas`);
+                const response = await fetch('http://localhost:3000/mascotas/todas');
     
                 if (response.ok) {
                     const data = await response.json();
