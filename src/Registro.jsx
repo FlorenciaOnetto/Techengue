@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Registro.css';
 
 function Registro() {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Hook para la redirección
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,8 @@ function Registro() {
       });
       if (response.ok) {
         alert('Usuario registrado exitosamente');
-        // Puedes redirigir al usuario a la página de login o inicio aquí si lo deseas
+        // Redirigir al login después de un registro exitoso
+        navigate('/login');
       } else {
         const errorData = await response.json();
         alert(`Error en el registro: ${errorData.error || 'Inténtalo de nuevo'}`);
@@ -37,6 +39,7 @@ function Registro() {
             <label>Nombre</label>
             <input
               type="text"
+              name="username"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Ingresa tu nombre"
@@ -47,6 +50,7 @@ function Registro() {
             <label>Email</label>
             <input
               type="email"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Ingresa tu email"
@@ -57,6 +61,7 @@ function Registro() {
             <label>Contraseña</label>
             <input
               type="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
