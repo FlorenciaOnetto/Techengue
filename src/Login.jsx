@@ -38,9 +38,7 @@ function Login() {
         console.error('Error:', error);
         alert('Error en la conexión con el servidor');
     }
-};
-
-
+  };
 
   return (
     <div className="login-container">
@@ -51,6 +49,7 @@ function Login() {
             <label>Email</label>
             <input
               type="email"
+              name="email"  // Asegúrate de agregar el atributo 'name'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Ingresa tu email"
@@ -61,6 +60,7 @@ function Login() {
             <label>Contraseña</label>
             <input
               type="password"
+              name="password"  // Asegúrate de agregar el atributo 'name'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
