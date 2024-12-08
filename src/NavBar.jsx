@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 
 function NavBar() {
+    const [nombre, setNombre] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const updateUser = () => {
+            const token = localStorage.getItem('token');
+            const nombreGuardado = localStorage.getItem('nombre');
+            if (token && nombreGuardado) {
+                setNombre(nombreGuardado);
+            } else {
+                setNombre('');
+            }
+        };
+
+        updateUser();
+
+        // Listener para cambios en localStorage
+        window.addEventListener('storage', updateUser);
+
+        return () => {
+            window.removeEventListener('storage', updateUser);
+        };
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -13,8 +35,6 @@ function NavBar() {
         window.location.reload();
     };
 
-    const nombre = localStorage.getItem('nombre'); // Usamos el nombre guardado en localStorage
-
     return (
         <nav className="navbar">
             <div className="navbar-logo">
@@ -23,16 +43,16 @@ function NavBar() {
             </div>
             <ul className="navbar-links">
                 <li><Link to="/inicio">Inicio</Link></li>
-                {/* Mostrar "Perfil de Usuario" solo si está autenticado */}
-                {isAuthenticated && nombre && <li><Link to="/perfilusuario">Perfil de Usuario</Link></li>}
-                {isAuthenticated && nombre && (
+                {/* Mostrar "Perfil de Usuario" solo si hay un nombre guardado */}
+                {nombre && <li><Link to="/perfilusuario">Perfil de Usuario</Link></li>}
+                {nombre && (
                   <Link to="/publicar-mascota" className="btn-publish">Publicar Mascota</Link>
                 )}
             </ul>
             
             <div className="user-section">
-                {isAuthenticated && nombre && <p className="user-greeting">Hola, {nombre}</p>}
-                {isAuthenticated ? (
+                {nombre && <p className="user-greeting">Hola, {nombre}</p>}
+                {nombre ? (
                     <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
                 ) : (
                     <>
