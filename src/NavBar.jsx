@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 
-function NavBar({ isAuthenticated }) {
+function NavBar() {
     const navigate = useNavigate();
 
     const handleLogout = () => {

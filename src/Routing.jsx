@@ -29,7 +29,7 @@ export default function Routing() {
 
     return (
         <BrowserRouter>
-            <NavBar  isAuthenticated={isAuthenticated} />
+            <NavBar />
             <Routes>
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
