@@ -165,6 +165,98 @@ export default function PerfilMascota() {
 
                     {isEditing ? (
                         <>
+                            <p>
+                                <strong>Nombre:</strong>
+                                <input
+                                    type="text"
+                                    name="nombre"
+                                    value={mascota.nombre}
+                                    onChange={handleInputChange}
+                                />
+                            </p>
+                            <p>
+                                <strong>Edad:</strong>
+                                <input
+                                    type="number"
+                                    name="edad_aproximada"
+                                    value={mascota.edad_aproximada}
+                                    onChange={handleInputChange}
+                                />
+                                <select
+                                    name="edad_unidad"
+                                    value={mascota.edad_unidad}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="meses">Meses</option>
+                                    <option value="años">Años</option>
+                                </select>
+                            </p>
+                            <p>
+                                <strong>Porte:</strong>
+                                <input
+                                    type="text"
+                                    name="tamano_aproximado"
+                                    value={mascota.tamano_aproximado}
+                                    onChange={handleInputChange}
+                                />
+                            </p>
+                            <p>
+                                <strong>Raza:</strong>
+                                <input
+                                    type="text"
+                                    name="raza"
+                                    value={mascota.raza}
+                                    onChange={handleInputChange}
+                                />
+                            </p>
+                            <p>
+                                <strong>Comportamiento:</strong>
+                                <textarea
+                                    name="comportamiento"
+                                    value={mascota.comportamiento}
+                                    onChange={handleInputChange}
+                                />
+                            </p>
+                            <p>
+                                <strong>Salud:</strong>
+                                <select
+                                    name="salud"
+                                    value={mascota.salud ? 'true' : 'false'}
+                                    onChange={(e) => handleInputChange({ target: { name: 'salud', value: e.target.value === 'true' } })}
+                                >
+                                    <option value="true">Con problemas de salud</option>
+                                    <option value="false">No tiene problemas de salud</option>
+                                </select>
+                            </p>
+                            {mascota.salud && (
+                                <p>
+                                    <strong>Detalles de Salud:</strong>
+                                    <input
+                                        type="text"
+                                        name="detallesSalud"
+                                        value={mascota.detallesSalud || ''}
+                                        onChange={handleInputChange}
+                                    />
+                                </p>
+                            )}
+                            <p>
+                                <strong>Especie:</strong>
+                                <input
+                                    type="text"
+                                    name="especie"
+                                    value={mascota.especie}
+                                    onChange={handleInputChange}
+                                />
+                            </p>
+                            <p>
+                                <strong>Región:</strong>
+                                <input
+                                    type="text"
+                                    name="region"
+                                    value={mascota.region}
+                                    onChange={handleInputChange}
+                                />
+                            </p>
                             <button className="button confirm-button" onClick={handleConfirmChanges}>Confirmar cambios</button>
                         </>
                     ) : (

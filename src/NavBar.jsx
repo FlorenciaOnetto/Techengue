@@ -32,7 +32,7 @@ function NavBar() {
         localStorage.removeItem('nombre');
         localStorage.removeItem('userId');
         navigate('/login');
-        window.location.reload();
+        // window.location.reload();
     };
 
     return (
