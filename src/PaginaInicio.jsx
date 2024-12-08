@@ -35,10 +35,6 @@ export default function PaginaInicio() {
         navigate(`/perfilmascota/${id}`);
     };
 
-    const handleRealizarSolicitud = (id) => {
-        navigate(`/solicitud/${id}`);
-    };
-
     const handleSearch = () => {
         setFiltroAplicado(true);
 
