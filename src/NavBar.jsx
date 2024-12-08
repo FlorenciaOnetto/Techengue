@@ -12,21 +12,26 @@ function NavBar() {
         const validateToken = async () => {
             const token = localStorage.getItem('token');
             if (token) {
-                // Hacer una solicitud al backend para verificar si el token es válido
                 try {
+                    // Hacer una solicitud al backend para obtener el perfil del usuario
                     const response = await fetch(`${backendUrl}/profile`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     });
-                    const data = await response.json();
-                    if (data.isValid) {
-                        // El token es válido, actualizar el estado
-                        setIsAuthenticated(true);
-                        const nombre = localStorage.getItem('nombre');
-                        setNombre(nombre);
+    
+                    if (response.ok) {
+                        // Si la respuesta es exitosa (200), el token es válido
+                        const data = await response.json();
+                        // Verificar que los datos del usuario estén presentes
+                        if (data.id_usuario && data.nombre) {
+                            setIsAuthenticated(true);
+                            setNombre(data.nombre);  // Puedes establecer el nombre del usuario desde la respuesta
+                        } else {
+                            setIsAuthenticated(false);
+                        }
                     } else {
-                        // El token no es válido, limpiar el localStorage
+                        // Si la respuesta no es exitosa (401 o 404), el token no es válido
                         localStorage.removeItem('token');
                         localStorage.removeItem('nombre');
                         setIsAuthenticated(false);
