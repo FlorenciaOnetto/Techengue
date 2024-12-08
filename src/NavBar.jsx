@@ -10,6 +10,7 @@ function NavBar() {
         const updateUser = () => {
             const token = localStorage.getItem('token');
             const nombreGuardado = localStorage.getItem('nombre');
+            console.log('nombre guardado:', nombreGuardado);
             if (token && nombreGuardado) {
                 setNombre(nombreGuardado);
             } else {

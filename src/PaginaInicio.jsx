@@ -70,7 +70,6 @@ export default function PaginaInicio() {
         setEdadAproximada('');
         setEdadUnidad('');
         setFiltroAplicado(false);
-        window.location.reload();
     };
 
     return (
