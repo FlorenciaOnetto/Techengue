@@ -9,10 +9,10 @@ function NavBar() {
     useEffect(() => {
         const updateUser = () => {
             const token = localStorage.getItem('token');
-            const nombreGuardado = localStorage.getItem('nombre');
-            console.log('nombre guardado:', nombreGuardado);
-            if (token && nombreGuardado) {
-                setNombre(nombreGuardado);
+            const nombre = localStorage.getItem('nombre');
+            console.log('nombre guardado:', nombre);
+            if (token && nombre) {
+                setNombre(nombre);
             } else {
                 setNombre('');
             }
