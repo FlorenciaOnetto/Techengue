@@ -11,32 +11,36 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await fetch(`${backendUrl}/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
+      const response = await fetch(`${backendUrl}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Datos de respuesta en login:", data); // Debug: imprime la respuesta completa
-            
-            // Guarda el token y el nombre en localStorage
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('nombre', data.nombre);
-            localStorage.setItem('userId', data.id); 
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Datos de respuesta en login:", data); // Debug: imprime la respuesta completa
 
-            alert('Inicio de sesión exitoso');
-            navigate('/inicio');
-            
-            // Recarga la página para reflejar los cambios en el navbar (opcional)
-        } else {
-            const errorData = await response.json();
-            alert(`Error en el inicio de sesión: ${errorData.error || 'Credenciales incorrectas'}`);
-        }
+        // Guarda el token y el nombre en localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('nombre', data.nombre);
+        localStorage.setItem('userId', data.id);
+
+        alert('Inicio de sesión exitoso');
+
+        // Actualizar manualmente la Navbar al iniciar sesión
+        const updateUserEvent = new Event('storage');
+        window.dispatchEvent(updateUserEvent);
+
+        // Redirigir al inicio
+        navigate('/inicio');
+      } else {
+        const errorData = await response.json();
+        alert(`Error en el inicio de sesión: ${errorData.error || 'Credenciales incorrectas'}`);
+      }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Error en la conexión con el servidor');
+      console.error('Error:', error);
+      alert('Error en la conexión con el servidor');
     }
   };
 
@@ -49,7 +53,7 @@ function Login() {
             <label>Email</label>
             <input
               type="email"
-              name="email"  // Asegúrate de agregar el atributo 'name'
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Ingresa tu email"
@@ -60,7 +64,7 @@ function Login() {
             <label>Contraseña</label>
             <input
               type="password"
-              name="password"  // Asegúrate de agregar el atributo 'name'
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"

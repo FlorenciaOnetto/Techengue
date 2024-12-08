@@ -6,22 +6,25 @@ function NavBar() {
     const [nombre, setNombre] = useState('');
     const navigate = useNavigate();
 
+    // Función para actualizar el estado del usuario
+    const updateUser = () => {
+        const token = localStorage.getItem('token');
+        const nombreGuardado = localStorage.getItem('nombre');
+        if (token && nombreGuardado) {
+            setNombre(nombreGuardado);
+        } else {
+            setNombre('');
+        }
+    };
+
+    // useEffect inicial para cargar el usuario
     useEffect(() => {
-        const updateUser = () => {
-            const token = localStorage.getItem('token');
-            const nombreGuardado = localStorage.getItem('nombre');
-            if (token && nombreGuardado) {
-                setNombre(nombreGuardado);
-            } else {
-                setNombre('');
-            }
-        };
-
         updateUser();
+    }, []);
 
-        // Listener para cambios en localStorage
+    // Listener de cambios en localStorage
+    useEffect(() => {
         window.addEventListener('storage', updateUser);
-
         return () => {
             window.removeEventListener('storage', updateUser);
         };
@@ -31,8 +34,8 @@ function NavBar() {
         localStorage.removeItem('token');
         localStorage.removeItem('nombre');
         localStorage.removeItem('userId');
+        setNombre(''); // Actualizar el estado manualmente al cerrar sesión
         navigate('/login');
-        // window.location.reload();
     };
 
     return (
