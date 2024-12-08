@@ -208,6 +208,7 @@ export default function PerfilUsuario() {
                                             <p><strong>Raza:</strong> {mascota.raza}</p>
                                             <p><strong>Edad:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
                                             <p><strong>Región:</strong> {mascota.region}</p>
+                                            <p><strong>Tamaño:</strong> {mascota.tamano_aproximado}</p>
                                             <button 
                                                 className="edit-button" 
                                                 onClick={() => handleEditMascota(mascota.id_mascota)}

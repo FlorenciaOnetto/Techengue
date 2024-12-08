@@ -1,4 +1,3 @@
-// ResultadosBusqueda.jsx
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ResultadosBusqueda.css';
@@ -17,21 +16,22 @@ function ResultadosBusqueda() {
         const fetchMascotas = async () => {
             const especie = query.get('especie');
             const region = query.get('region');
-            const tamano_aproximado = query.get('tamano_aproximado');
-            const edad_aproximada = query.get('edad_aproximada');
-            const edad_unidad = query.get('edad_unidad');
-    
-            // Agregar log para verificar los valores de los filtros
+            const tamanoAproximado = query.get('tamano_aproximado');
+            const edadAproximada = query.get('edad_aproximada');
+            const edadUnidad = query.get('edad_unidad');
+
             console.log("Filtros de búsqueda:", {
                 especie,
                 region,
-                tamano_aproximado,
-                edad_aproximada,
-                edad_unidad,
+                tamanoAproximado,
+                edadAproximada,
+                edadUnidad,
             });
-    
+
             try {
-                const response = await fetch(`http://localhost:3000/mascotas/buscar?especie=${especie}&region=${region}&tamano_aproximado=${tamano_aproximado}&edad_aproximada=${edad_aproximada}&edad_unidad=${edad_unidad}`);
+                const response = await fetch(
+                    `http://localhost:3000/mascotas/buscar?especie=${especie}&region=${region}&tamano_aproximado=${tamanoAproximado}&edad_aproximada=${edadAproximada}&edad_unidad=${edadUnidad}`
+                );
                 if (!response.ok) {
                     throw new Error("Error al buscar mascotas");
                 }
@@ -39,21 +39,18 @@ function ResultadosBusqueda() {
                 setMascotas(Array.isArray(data) ? data : []);
                 setError(null);
             } catch (err) {
-                console.error(err);
+                console.error("Error en la búsqueda de mascotas:", err);
                 setError("Hubo un problema al cargar las mascotas.");
                 setMascotas([]);
             }
         };
-    
+
         fetchMascotas();
-    }, [query]);
-    
+    }, [query]); // Dependemos de los cambios en los parámetros de la URL
 
     const handleViewDetails = (idMascota) => {
-        console.log(`Navegando a /perfilmascota/${idMascota}`);
         navigate(`/perfilmascota/${idMascota}`);
     };
-    
 
     return (
         <div className="resultados-container">
@@ -63,7 +60,7 @@ function ResultadosBusqueda() {
             ) : (
                 mascotas.length > 0 ? (
                     <div className="mascotas-grid">
-                        {mascotas.map(mascota => (
+                        {mascotas.map((mascota) => (
                             <div key={mascota.id_mascota} className="mascota-card">
                                 <div className="mascota-info">
                                     <h3>{mascota.nombre}</h3>
@@ -73,7 +70,11 @@ function ResultadosBusqueda() {
                                     <p><strong>Edad Aproximada:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
                                 </div>
                                 {mascota.fotos && (
-                                    <img src={`http://localhost:3000/uploads/${mascota.fotos}`} alt={mascota.nombre} className="mascota-foto" />
+                                    <img
+                                        src={`http://localhost:3000/uploads/${mascota.fotos}`}
+                                        alt={mascota.nombre}
+                                        className="mascota-foto"
+                                    />
                                 )}
                                 <button 
                                     onClick={() => handleViewDetails(mascota.id_mascota)} 
@@ -81,7 +82,6 @@ function ResultadosBusqueda() {
                                 >
                                     Ver detalles
                                 </button>
-
                             </div>
                         ))}
                     </div>
