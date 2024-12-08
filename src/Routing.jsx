@@ -18,11 +18,19 @@ import { AuthProvider } from './AuthContext';
 
 
 export default function Routing() {
+    // Estado global de autenticación
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // Verifica el estado de autenticación al cargar
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const nombre = localStorage.getItem("nombre");
+        setIsAuthenticated(!!token && !!nombre); // Autenticado si ambos existen
+    }, []);
 
     return (
-        <AuthProvider>
         <BrowserRouter>
-            <NavBar />
+            <NavBar  isAuthenticated={isAuthenticated} />
             <Routes>
                 <Route path={'/inicio'} element={<PaginaInicio />} />
                 <Route path={'/perfilusuario'} element={<PerfilUsuario />} />
@@ -39,6 +47,5 @@ export default function Routing() {
                 <Route path={'/'} element={<App />} /> {/* Coloca la ruta raíz al final */}
             </Routes>
         </BrowserRouter>
-        </AuthProvider>
     );
 }
