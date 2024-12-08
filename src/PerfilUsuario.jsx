@@ -9,6 +9,7 @@ export default function PerfilUsuario() {
     const [isEditing, setIsEditing] = useState(false);
     const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
     const navigate = useNavigate();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -17,7 +18,7 @@ export default function PerfilUsuario() {
             if (!token) return;
 
             try {
-                const response = await fetch('http://localhost:3000/auth/profile', {
+                const response = await fetch(`${backendUrl}/auth/profile`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -41,7 +42,7 @@ export default function PerfilUsuario() {
             if (!token) return;
 
             try {
-                const response = await fetch('http://localhost:3000/mascotas/mis-mascotas', {
+                const response = await fetch(`${backendUrl}/mascotas/mis-mascotas`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -69,7 +70,7 @@ export default function PerfilUsuario() {
     const handleUpdateProfile = async () => {
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch('http://localhost:3000/auth/profile', {
+            const response = await fetch(`${backendUrl}/auth/profile`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -97,7 +98,7 @@ export default function PerfilUsuario() {
         if (!token) return;
 
         try {
-            const response = await fetch('http://localhost:3000/auth/profile', {
+            const response = await fetch(`${backendUrl}/auth/profile`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -124,7 +125,7 @@ export default function PerfilUsuario() {
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/mascotas/${id_mascota}`, {
+            const response = await fetch(`${backendUrl}/mascotas/${id_mascota}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -198,7 +199,7 @@ export default function PerfilUsuario() {
                                 {mascotas.map((mascota) => (
                                     <li key={mascota.id_mascota} className="mascota-item">
                                         <img 
-                                            src={`http://localhost:3000/uploads/${mascota.fotos}`} 
+                                            src={`${backendUrl}/uploads/${mascota.fotos}`} 
                                             alt={mascota.nombre} 
                                             className="mascota-image"
                                         />

@@ -6,11 +6,12 @@ const SolicitudEstado = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchSolicitudes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/solicitudes/usuario/solicitudes`, {
+        const response = await fetch(`${backendUrl}/solicitudes/usuario/solicitudes`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

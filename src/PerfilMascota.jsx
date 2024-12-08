@@ -10,11 +10,12 @@ export default function PerfilMascota() {
     const [solicitudes, setSolicitudes] = useState([]);
     const [showSolicitudes, setShowSolicitudes] = useState(false);
     const navigate = useNavigate();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchMascota = async () => { 
             try {
-                const response = await fetch(`http://localhost:3000/mascotas/${idMascota}`);
+                const response = await fetch(`${backendUrl}/mascotas/${idMascota}`);
                 if (!response.ok) throw new Error('Error al cargar la mascota');
                 
                 const data = await response.json();
@@ -45,7 +46,7 @@ export default function PerfilMascota() {
 
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`http://localhost:3000/mascotas/${mascota.id_mascota}`, {
+            const response = await fetch(`${backendUrl}/mascotas/${mascota.id_mascota}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -80,7 +81,7 @@ export default function PerfilMascota() {
 
     const handleViewSolicitudes = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/solicitudes/mascota/${idMascota}`);
+            const response = await fetch(`${backendUrl}/solicitudes/mascota/${idMascota}`);
             if (!response.ok) throw new Error('Error al obtener solicitudes');
 
             const data = await response.json();
@@ -94,7 +95,7 @@ export default function PerfilMascota() {
 
     const handleSolicitudDecision = async (solicitudId, decision) => {
         try {
-            const response = await fetch(`http://localhost:3000/solicitudes/${solicitudId}`, {
+            const response = await fetch(`${backendUrl}/solicitudes/${solicitudId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -158,7 +159,7 @@ export default function PerfilMascota() {
     return (
         <div className="pet-profile">
             <div className="profile-card">
-                <img src={`http://localhost:3000/uploads/${mascota.fotos}`} alt={mascota.nombre} className="pet-image" />
+                <img src={`${backendUrl}/uploads/${mascota.fotos}`} alt={mascota.nombre} className="pet-image" />
                 <div className="pet-details">
                     <h2>{mascota.nombre}</h2>
 

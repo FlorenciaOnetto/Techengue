@@ -5,6 +5,7 @@ import './PublicarMascota.css';
 
 function PublicarMascota() {
     const navigate = useNavigate();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     useEffect(() => {
         // Obtener el userId del localStorage
         const userId = localStorage.getItem('userId');
@@ -60,7 +61,7 @@ function PublicarMascota() {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/mascotas/publicar', {
+            const response = await fetch(`${backendUrl}/mascotas/publicar`, {
                 method: 'POST',
                 body: data,
                 headers: {

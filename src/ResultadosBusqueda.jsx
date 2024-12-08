@@ -11,6 +11,7 @@ function ResultadosBusqueda() {
     const navigate = useNavigate();
     const [mascotas, setMascotas] = useState([]);
     const [error, setError] = useState(null);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchMascotas = async () => {
@@ -30,7 +31,7 @@ function ResultadosBusqueda() {
 
             try {
                 const response = await fetch(
-                    `http://localhost:3000/mascotas/buscar?especie=${especie}&region=${region}&tamano_aproximado=${tamanoAproximado}&edad_aproximada=${edadAproximada}&edad_unidad=${edadUnidad}`
+                    `${backendUrl}/mascotas/buscar?especie=${especie}&region=${region}&tamano_aproximado=${tamanoAproximado}&edad_aproximada=${edadAproximada}&edad_unidad=${edadUnidad}`
                 );
                 if (!response.ok) {
                     throw new Error("Error al buscar mascotas");
@@ -71,7 +72,7 @@ function ResultadosBusqueda() {
                                 </div>
                                 {mascota.fotos && (
                                     <img
-                                        src={`http://localhost:3000/uploads/${mascota.fotos}`}
+                                        src={`${backendUrl}/uploads/${mascota.fotos}`}
                                         alt={mascota.nombre}
                                         className="mascota-foto"
                                     />

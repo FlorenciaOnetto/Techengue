@@ -7,11 +7,12 @@ const PetAdoptionRequests = () => {
   const [requests, setRequests] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/solicitudes/mascota/${idMascota}`);
+        const response = await fetch(`${backendUrl}/solicitudes/mascota/${idMascota}`);
         if (!response.ok) {
           throw new Error('Error al obtener las solicitudes');
         }

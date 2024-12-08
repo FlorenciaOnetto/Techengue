@@ -7,6 +7,7 @@ const AdoptionRequestForm = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
   const [submitError, setSubmitError] = useState('');
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -74,7 +75,7 @@ const AdoptionRequestForm = () => {
 
       try {
         console.log("Datos a enviar:", data);
-        const response = await fetch('http://localhost:3000/solicitudes/crear', {
+        const response = await fetch(`${backendUrl}/solicitudes/crear`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,

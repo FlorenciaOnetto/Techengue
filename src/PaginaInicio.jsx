@@ -12,11 +12,12 @@ export default function PaginaInicio() {
     const [edadAproximada, setEdadAproximada] = useState('');
     const [edadUnidad, setEdadUnidad] = useState('');
     const [filtroAplicado, setFiltroAplicado] = useState(false);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchMascotas = async () => {
             try {
-                const response = await fetch('http://localhost:3000/mascotas/todas');
+                const response = await fetch(`${backendUrl}/mascotas/todas`);
                 if (response.ok) {
                     const data = await response.json();
                     setMascotas(data);
@@ -146,7 +147,7 @@ export default function PaginaInicio() {
                         {mascotas.map((mascota) => (
                             <li key={mascota.id_mascota} className="mascota-item mascota-card">
                                 <img
-                                    src={`http://localhost:3000/uploads/${mascota.fotos}`}
+                                    src={`${backendUrl}/uploads/${mascota.fotos}`}
                                     alt={mascota.nombre}
                                     className="mascota-image"
                                 />
