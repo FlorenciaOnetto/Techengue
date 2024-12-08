@@ -8,7 +8,7 @@ describe('Flujo de Registro e Inicio de Sesión', () => {
     
     cy.get('button[type="submit"]').click();
 
-    cy.url().should('include', '/login');  // Verifica que la URL cambie a /login
+    cy.url().should('include', '/login');  
 
     cy.get('input[name="email"]').type('usuario_prueba@example.com');
     cy.get('input[name="password"]').type('password123');
