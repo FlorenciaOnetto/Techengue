@@ -17,7 +17,6 @@ export default function PaginaInicio() {
         const fetchMascotas = async () => {
             try {
                 const response = await fetch('http://localhost:3000/mascotas/todas');
-    
                 if (response.ok) {
                     const data = await response.json();
                     setMascotas(data);
@@ -73,7 +72,7 @@ export default function PaginaInicio() {
         setTamanoAproximado('');
         setEdadAproximada('');
         setEdadUnidad('');
-        setFiltroAplicado(false); 
+        setFiltroAplicado(false);
         window.location.reload();
     };
 
@@ -85,12 +84,22 @@ export default function PaginaInicio() {
                 <h2>Dales una segunda oportunidad, encuentra a tu compañero de vida</h2>
                 <p>Haz una búsqueda según tus preferencias</p>
                 <div className="filters">
-                    <select className="input" value={especie} onChange={(e) => setEspecie(e.target.value)}>
+                    <select
+                        name="especie"
+                        className="input"
+                        value={especie}
+                        onChange={(e) => setEspecie(e.target.value)}
+                    >
                         <option value="">Especie</option>
                         <option value="Perro">Perro</option>
                         <option value="Gato">Gato</option>
                     </select>
-                    <select className="input" value={region} onChange={(e) => setRegion(e.target.value)}>
+                    <select
+                        name="region"
+                        className="input"
+                        value={region}
+                        onChange={(e) => setRegion(e.target.value)}
+                    >
                         <option value="">Selecciona una región</option>
                         <option value="Arica y Parinacota">Arica y Parinacota</option>
                         <option value="Tarapacá">Tarapacá</option>
@@ -109,41 +118,36 @@ export default function PaginaInicio() {
                         <option value="Aysén">Aysén</option>
                         <option value="Magallanes">Magallanes</option>
                     </select>
-                    <select className="input" value={tamanoAproximado} onChange={(e) => setTamanoAproximado(e.target.value)}>
+                    <select
+                        name="tamano_aproximado"
+                        className="input"
+                        value={tamanoAproximado}
+                        onChange={(e) => setTamanoAproximado(e.target.value)}
+                    >
                         <option value="">Tamaño aproximado</option>
                         <option value="Pequeño">Pequeño</option>
                         <option value="Mediano">Mediano</option>
                         <option value="Grande">Grande</option>
                     </select>
-                    <input
-                        type="number"
-                        placeholder="Edad Aproximada"
-                        value={edadAproximada}
-                        onChange={(e) => setEdadAproximada(e.target.value)}
-                        className="input"
-                    />
-                    <select className="input" value={edadUnidad} onChange={(e) => setEdadUnidad(e.target.value)}>
-                        <option value="">Unidad</option>
-                        <option value="meses">Meses</option>
-                        <option value="años">Años</option>
-                    </select>
-                    <button className="search-btn" onClick={handleSearch}>→</button>
-                    {/* Mostrar el botón "Limpiar Filtros" solo si se ha aplicado un filtro */}
+                    <button className="search-btn" name="search" onClick={handleSearch}>
+                        →
+                    </button>
                     {filtroAplicado && (
-                        <button className="reset-filters" onClick={handleResetFilters}>Limpiar Filtros</button>
+                        <button className="reset-filters" onClick={handleResetFilters}>
+                            Limpiar Filtros
+                        </button>
                     )}
                 </div>
             </section>
 
-            {/* Sección de mascotas en adopción */}
             <section className="info-card">
                 {mascotas.length > 0 ? (
                     <ul className="mascotas-list">
                         {mascotas.map((mascota) => (
                             <li key={mascota.id_mascota} className="mascota-item mascota-card">
-                                <img 
-                                    src={`http://localhost:3000/uploads/${mascota.fotos}`} 
-                                    alt={mascota.nombre} 
+                                <img
+                                    src={`http://localhost:3000/uploads/${mascota.fotos}`}
+                                    alt={mascota.nombre}
                                     className="mascota-image"
                                 />
                                 <div className="mascota-details">
@@ -152,19 +156,22 @@ export default function PaginaInicio() {
                                     <p><strong>Raza:</strong> {mascota.raza}</p>
                                     <p><strong>Edad:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
                                     <p><strong>Región:</strong> {mascota.region}</p>
-                                    <button className="detail-button" onClick={() => handleVerDetalle(mascota.id_mascota)}>Ver</button>
+                                    <p><strong>Tamaño:</strong> {mascota.tamano_aproximado}</p>
+                                    <button className="detail-button" onClick={() => handleVerDetalle(mascota.id_mascota)}>
+                                        Ver
+                                    </button>
                                 </div>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <p>No hay mascotas que coincidan con tu búsqueda.</p>
+                    <p className="no-results-message">No hay mascotas que coincidan con tu búsqueda.</p>
                 )}
             </section>
 
             <footer className="footer">
                 <p>&copy; TailWaggers</p>
             </footer>
-        </div> 
+        </div>
     );
 }

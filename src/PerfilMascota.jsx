@@ -169,7 +169,7 @@ export default function PerfilMascota() {
                     ) : (
                         <>
                             <p><strong>Edad:</strong> {mascota.edad_aproximada} {mascota.edad_unidad}</p>
-                            <p><strong>Porte:</strong> {mascota.tamano_aproximado}</p>
+                            <p><strong>Tamaño:</strong> {mascota.tamano_aproximado}</p>
                             <p><strong>Raza:</strong> {mascota.raza}</p>
                             <p><strong>Comportamiento:</strong> {mascota.comportamiento}</p>
                             <p><strong>Salud:</strong> {mascota.salud ? 'Con problemas de salud' : 'No tiene problemas de salud'}</p>
