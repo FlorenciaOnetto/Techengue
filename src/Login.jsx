@@ -30,7 +30,7 @@ function Login() {
             navigate('/inicio');
             
             // Recarga la página para reflejar los cambios en el navbar (opcional)
-            // window.location.reload();
+            window.location.reload();
         } else {
             const errorData = await response.json();
             alert(`Error en el inicio de sesión: ${errorData.error || 'Credenciales incorrectas'}`);
