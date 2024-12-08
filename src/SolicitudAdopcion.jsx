@@ -219,6 +219,7 @@ const AdoptionRequestForm = () => {
         <div>
           <label className="section-title">Razones para adoptar</label>
           <textarea
+            name="razones" 
             value={razones}
             onChange={(e) => setRazones(e.target.value)}
             placeholder="Explica tus motivos para adoptar"
@@ -229,6 +230,7 @@ const AdoptionRequestForm = () => {
         <div>
           <label className="section-title">Información de Contacto</label>
           <input
+            name="contacto" 
             type="text"
             value={contacto}
             onChange={(e) => setContacto(e.target.value)}

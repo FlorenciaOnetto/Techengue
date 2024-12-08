@@ -1,6 +1,5 @@
 describe('Publicación de Mascota', () => {
     it('Debería permitir al usuario publicar una nueva mascota', () => {
-      // 1. Iniciar sesión: Enviar una solicitud para obtener el token
       cy.request({
         method: 'POST',
         url: 'http://localhost:3000/auth/login', 
@@ -9,16 +8,13 @@ describe('Publicación de Mascota', () => {
           password: 'password123'               
         }
       }).then((response) => {
-        // 2. Asegurarse de que la respuesta contiene un token
         expect(response.status).to.eq(200);
         const { token, nombre, id } = response.body;
   
-        // 3. Guardar el token y nombre en localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('nombre', nombre);
         localStorage.setItem('userId', id);
   
-        // 4. Visitar la página de publicar mascota
         cy.visit('http://localhost:5173/publicar-mascota');
         
         cy.get('input[name="nombre"]').type('Rex');
@@ -29,9 +25,8 @@ describe('Publicación de Mascota', () => {
         cy.get('input[name="raza"]').type('Labrador');
         cy.get('select[name="region"]').select('Metropolitana');
         cy.get('textarea[name="comportamiento"]').type('Amistoso con niños y otros perros');
-        cy.get('input[name="salud"]').check(); // Marcar la opción "Con problemas de salud"
+        cy.get('input[name="salud"]').check(); 
   
-        // Cargar el archivo de imagen como base64
         cy.fixture('test_image.jpg', 'base64').then((fileContent) => {
             cy.get('input[type="file"]').attachFile({
             fileContent,
@@ -42,7 +37,6 @@ describe('Publicación de Mascota', () => {
         });
   
   
-        // 5. Enviar el formulario
         cy.get('button[type="submit"]').click();
         
         cy.get('.success-message').should('be.visible').and('contain', 'Mascota publicada correctamente');
