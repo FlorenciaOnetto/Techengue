@@ -14,11 +14,13 @@ import PerfilMascota from "./PerfilMascota";
 import PublicarMascota from './PublicarMascota';
 import ResultadosBusqueda from "./ResultadosBusqueda";
 import PrivateRoute from './PrivateRoute';  
+import { AuthProvider } from './AuthContext';
 
 
 export default function Routing() {
 
     return (
+        <AuthProvider>
         <BrowserRouter>
             <NavBar />
             <Routes>
@@ -37,5 +39,6 @@ export default function Routing() {
                 <Route path={'/'} element={<App />} /> {/* Coloca la ruta raíz al final */}
             </Routes>
         </BrowserRouter>
+        </AuthProvider>
     );
 }

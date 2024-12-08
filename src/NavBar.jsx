@@ -21,7 +21,7 @@ function NavBar() {
         updateUser();
 
         // Listener para cambios en localStorage
-        window.addEventListener('storage', updateUser);
+        // window.addEventListener('storage', updateUser);
 
         return () => {
             window.removeEventListener('storage', updateUser);
