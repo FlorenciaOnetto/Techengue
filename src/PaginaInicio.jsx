@@ -6,6 +6,7 @@ import imagenMascota from './assets/imagen_principal.jpg';
 export default function PaginaInicio() {
     const navigate = useNavigate();
     const [mascotas, setMascotas] = useState([]);
+    const [mascotasOriginales, setMascotasOriginales] = useState([]); // Copia de datos originales
     const [especie, setEspecie] = useState('');
     const [region, setRegion] = useState('');
     const [tamanoAproximado, setTamanoAproximado] = useState('');
@@ -20,7 +21,8 @@ export default function PaginaInicio() {
                 const response = await fetch(`${backendUrl}/mascotas/todas`);
                 if (response.ok) {
                     const data = await response.json();
-                    setMascotas(data);
+                    setMascotas(data); // Guardar los datos en el estado principal
+                    setMascotasOriginales(data); // Crear una copia de los datos originales
                 } else {
                     console.error('Error al obtener las mascotas');
                 }
@@ -38,7 +40,7 @@ export default function PaginaInicio() {
     const handleSearch = () => {
         setFiltroAplicado(true);
 
-        let filteredMascotas = mascotas;
+        let filteredMascotas = mascotasOriginales; // Usa la copia original como base para filtrar
 
         if (especie) {
             filteredMascotas = filteredMascotas.filter(mascota => mascota.especie === especie);
@@ -60,7 +62,7 @@ export default function PaginaInicio() {
             filteredMascotas = filteredMascotas.filter(mascota => mascota.edad_unidad === edadUnidad);
         }
 
-        setMascotas(filteredMascotas);
+        setMascotas(filteredMascotas); // Actualiza solo los resultados filtrados
     };
 
     const handleResetFilters = () => {
@@ -70,6 +72,8 @@ export default function PaginaInicio() {
         setEdadAproximada('');
         setEdadUnidad('');
         setFiltroAplicado(false);
+
+        setMascotas(mascotasOriginales); // Restaura los datos originales
     };
 
     return (
