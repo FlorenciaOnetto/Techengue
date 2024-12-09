@@ -43,7 +43,7 @@ export default function Routing() {
                 <Route path={'/perfilmascota/:idMascota'} element={<PerfilMascota />} /> 
                 <Route path={"/publicar-mascota"} element={<PublicarMascota />} />
                 <Route path={'/resultados'} element={<ResultadosBusqueda />} />
-                <Route path={'/inicio'} element={<App />} /> {/* Coloca la ruta raíz al final */}
+                <Route path={'/'} element={<PaginaInicio />} /> {/* Coloca la ruta raíz al final */}
             </Routes>
         </BrowserRouter>
     );
